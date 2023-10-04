@@ -11,8 +11,8 @@ import LogoutPage from './components/LogoutPage';
 import CoursePage from './components/CoursePage';
 import { useGoogleOneTapLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import AssignmentsPage from './components/AssignmentsPage';
-import CreateStudent from './components/CreateStudentPage';
 import StudentsPage from './components/StudentsPage';
+import RosterPage from './components/RosterPage';
 const client_id = "553535256675-gtounck06hsj2m2aoe209aqjjhsnqplf.apps.googleusercontent.com"
 
   function App() {
@@ -32,6 +32,7 @@ const client_id = "553535256675-gtounck06hsj2m2aoe209aqjjhsnqplf.apps.googleuser
               <Route path="/students" element={<StudentsPage />} />
               <Route path="/course/:courseid/assignments" element={<AssignmentsPage />} />
               <Route path="/course/:courseid" element={<CoursePage />} />
+              <Route path="/course/:courseid/roster" element={<RosterPage />} />
             </Routes>
           </Router>
         </GoogleOAuthProvider>
