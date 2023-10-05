@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { useParams } from "react-router-dom";
 import { useEffect } from 'react';
 import axios from "axios"
+import { useNavigate } from 'react-router-dom';
 import '../css/Table.css'; // Import the CSS file for styling
 
 const StudentsPage = () => {
+
+  const navigate = useNavigate()
 
   const { courseid } = useParams()
 
@@ -92,6 +95,13 @@ const StudentsPage = () => {
     })
   };
 
+  const handleViewStudentCourse = (index) => {
+    const id = students[index].id
+    setTimeout(() => {
+      navigate(id + '/courses')
+    })
+  }
+
   return (
     <div className="student-page">
       <h1>Students Page</h1>
@@ -112,6 +122,11 @@ const StudentsPage = () => {
                 <td>
                   <button onClick={() => handleDeleteStudent(index)}>
                     Delete
+                  </button>
+                </td>
+                <td>
+                  <button onClick={() => handleViewStudentCourse(index)}>
+                    View Courses
                   </button>
                 </td>
               </tr>

@@ -37,7 +37,6 @@ const CoursePage = () => {
             }})
         .then((res) => {
             setAccount(res.data)
-            console.log('pog')
         })
         .catch((error) => {
             console.error("Error:", error);
