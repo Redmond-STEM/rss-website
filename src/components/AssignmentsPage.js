@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import axios from "axios"
 import '../css/Table.css'; // Import the CSS file for styling
 import API_URL from '../Api';
+import { Button, Table, Modal } from 'react-bootstrap';
 
 const AssignmentPage = () => {
 
@@ -23,6 +24,8 @@ const AssignmentPage = () => {
   const [assignments, setAssignments] = useState([]);
   const [assignmentName, setAssignmentName] = useState('');
   const [assignmentWeightage, setAssignmentWeightage] = useState('');
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [assignmentToDeleteIndex, setAssignmentToDeleteIndex] = useState(null);
 
   useEffect(() => {
       let authtoken = localStorage.getItem("authtoken")
@@ -86,6 +89,16 @@ const AssignmentPage = () => {
      })
   };
 
+  const handleOpenDeleteModal = (index) => {
+    setAssignmentToDeleteIndex(index);
+    setShowDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
+    setAssignmentToDeleteIndex(null);
+  };  
+
   const handleDeleteAssignment = (index) => {
     const updatedAssignments = [...assignments];
     const id = updatedAssignments[index].id
@@ -105,11 +118,11 @@ const AssignmentPage = () => {
       <h1>Assignment Page</h1>
       <div className="assignment-page">
         <h2>Assignments</h2>
-        <table>
+        <Table bordered style={ {textAlign: "left"} }>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Weightage</th>
+              <th style={ {width: "20%"} }>Name</th>
+              <th style={ {width: "80%"} }>Weightage</th>
             </tr>
           </thead>
           <tbody>
@@ -118,33 +131,51 @@ const AssignmentPage = () => {
                 <td>{assignment.name}</td>
                 <td>{assignment.weight}</td>
                 <td>
-                  <button onClick={() => handleDeleteAssignment(index)}>
+                  <Button  variant="danger" onClick={() => handleOpenDeleteModal(index)}>
                     Delete
-                  </button>
+                  </Button>
                 </td>
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
+        <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirm Deletion</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Are you sure you want to delete this assignment?
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseDeleteModal}>
+              Cancel
+            </Button>
+            <Button variant="danger" onClick={handleDeleteAssignment(assignmentToDeleteIndex)}>
+              Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
 
       <div className="create-assignment">
         <h2>Create Assignment</h2>
-        <label htmlFor="assignmentName">Name:</label>
+        <label htmlFor="assignmentName">Name: </label>
         <input
           type="text"
           id="assignmentName"
           value={assignmentName}
           onChange={handleNameChange}
         />
-        <label htmlFor="assignmentWeightage">Weightage:</label>
+        <br/>
+        <label htmlFor="assignmentWeightage">Weightage: </label>
         <input
           type="text"
           id="assignmentWeightage"
           value={assignmentWeightage}
           onChange={handleWeightageChange}
         />
-        <button onClick={handleCreateAssignment}>Create</button>
+        <br/>
+        <Button onClick={handleCreateAssignment}>Create</Button>
       </div>
     </div>
   );

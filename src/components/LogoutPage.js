@@ -1,6 +1,5 @@
 import { googleLogout } from "@react-oauth/google"
 import { useNavigate } from "react-router-dom"
-import { useState } from "react"
 import { Modal, Button } from "react-bootstrap"
 import axios from "axios"
 import API_URL from "../Api"

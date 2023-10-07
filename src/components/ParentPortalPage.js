@@ -12,19 +12,7 @@ const ParentPortalPage = () => {
 
   const { courseid } = useParams()
 
-  const [account, setAccount] = useState(
-    {
-      "username": "default user",
-      "email": "default email",
-      "create_time": "yes",
-      "id": 0,
-      "auth_type": "google"
-    }
-  )
-
   const [students, setStudents] = useState([]);
-  const [studentFirstName, setStudentFirstName] = useState('');
-  const [studentLastName, setStudentLastName] = useState('');
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [studentToDeleteIndex, setStudentToDeleteIndex] = useState(null);
@@ -35,17 +23,6 @@ const ParentPortalPage = () => {
 
     setStudents([]);
 
-    axios.get(API_URL + "getaccount", {
-      params: {
-        token: authtoken, // Add your parameters here
-      }
-    })
-      .then((res) => {
-        setAccount(res.data)
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
     axios.get(API_URL + "getstudents", {
       params: {
         token: authtoken
@@ -70,16 +47,16 @@ const ParentPortalPage = () => {
     setStudentToDeleteIndex(null);
   };  
 
-  const handleDeleteStudent = (index) => {
+  const handleDeleteStudent = () => {
     const updatedStudents = [...students];
-    const id = updatedStudents[index].id
+    const id = updatedStudents[studentToDeleteIndex].id
     console.log(id)
     const params = {
       token: localStorage.getItem("authtoken"),
       id: parseInt(id)
     }
     axios.post(API_URL + "deletestudent", params).then((res) => {
-      updatedStudents.splice(index, 1);
+      updatedStudents.splice(studentToDeleteIndex, 1);
       setStudents(updatedStudents);
     })
   };
@@ -93,13 +70,14 @@ const ParentPortalPage = () => {
 
   return (
     <div className="student-page">
-      <h1>Students Page</h1>
       <div className="student-page">
-        <Table bordered responsive="md">
-          <thead className="thead-dark">
+        <Table bordered responsive="md" style={ {textAlign: "left"} }>
+          <thead>
             <tr>
-              <th scope="col">First Name</th>
-              <th scope="col">Last Name</th>
+              <th style={ {width: "10%"} }>First Name</th>
+              <th style={ {width: "10%"} }>Last Name</th>
+              <th style={ {width: "20%"} }>View Courses</th>
+              <th style={ {width: "20%"} }>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -113,7 +91,7 @@ const ParentPortalPage = () => {
                   </Button>
                 </td>
                 <td>
-                  <Button onClick={() => handleOpenDeleteModal(index)}>
+                  <Button  variant="danger" onClick={() => handleOpenDeleteModal(index)}>
                     Delete
                   </Button>
                 </td>

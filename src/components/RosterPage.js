@@ -9,17 +9,6 @@ import API_URL from '../Api';
 const RosterPage = () => {
 
   const { courseid } = useParams()
-
-  const [account, setAccount] = useState(
-    {
-      "username": "default user",
-      "email": "default email",
-      "create_time": "yes",
-      "id": 0,
-      "auth_type": "google"
-    }
-  )
-
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
@@ -27,17 +16,6 @@ const RosterPage = () => {
 
     setStudents([]);
 
-    axios.get(API_URL + "getaccount", {
-      params: {
-        token: authtoken, // Add your parameters here
-      }
-    })
-      .then((res) => {
-        setAccount(res.data)
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
     axios.get(API_URL + "getstudents", {
       params: {
         token: authtoken,
@@ -79,12 +57,12 @@ const RosterPage = () => {
       <h1 className="mb-4">Roster Page</h1>
       <div className="student-list">
         <h2 className="mb-3">Students</h2>
-        <Table bordered responsive="md">
+        <Table bordered responsive="md" style={ {textAlign: "left"} }>
           <thead className="thead-dark">
             <tr>
-              <th scope="col">First Name</th>
-              <th scope="col">Last Name</th>
-              <th scope="col">Parent Email</th>
+              <th style={ {width: "20%"} }>First Name</th>
+              <th style={ {width: "20%"} }>Last Name</th>
+              <th style={ {width: "60%"} }>Parent Email</th>
             </tr>
           </thead>
           <tbody>

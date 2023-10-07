@@ -5,20 +5,11 @@ import { useEffect } from 'react';
 import axios from "axios"
 import '../css/Table.css'; // Import the CSS file for styling
 import API_URL from '../Api';
+import { Table, Button } from 'react-bootstrap';
 
 const StudentCoursesPage = () => {
 
   const { studentid } = useParams()
-
-  const [account, setAccount] = useState(
-      {
-          "username": "default user",
-          "email": "default email",
-          "create_time": "yes",
-          "id": 0,
-          "auth_type": "google"
-      }
-  )
 
   const [student, setStudent] = useState(
     {
@@ -34,16 +25,6 @@ const StudentCoursesPage = () => {
 
       setCourses([]);
 
-      axios.get(API_URL + "getaccount", {
-          params: {
-              token: authtoken, // Add your parameters here
-          }})
-      .then((res) => {
-          setAccount(res.data)
-      })
-      .catch((error) => {
-          console.error("Error:", error);
-      });
       axios.get(API_URL + "getstudent", {
           params: {
               token: authtoken,
@@ -97,12 +78,12 @@ const StudentCoursesPage = () => {
       <h1>Courses Page</h1>
       <div className="courses-page">
         <h2>Courses for {student.firstname} {student.lastname}</h2>
-        <table>
+        <Table bordered style={ {textAlign: "left"} }>
           <thead>
             <tr>
-              <th>Course Name</th>
-              <th>Time</th>
-              <th>Teacher Email</th>
+              <th style={ {width: "30%"} }>Course Name</th>
+              <th style={ {width: "30%"} }>Time</th>
+              <th style={ {width: "30%"} }>Teacher Email</th>
             </tr>
           </thead>
           <tbody>
@@ -111,10 +92,11 @@ const StudentCoursesPage = () => {
                 <td>{course.name}</td>
                 <td>{course.time}</td>
                 <td>{course.teacheremail}</td>
+                <td><Button>View Grades</Button></td>
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
     </div>
   );

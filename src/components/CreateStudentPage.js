@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
 import '../css/Table.css'; // Import the CSS file for styling
+import { FormLabel, Button } from 'react-bootstrap';
 import API_URL from '../Api';
 
 const CreateStudentPage = () => {
@@ -60,12 +61,14 @@ const CreateStudentPage = () => {
       setStudents([...students, newStudent]);
       setStudentFirstName('');
       setStudentLastName('');
+    }).then(() => {
+      navigate("/parentportal")
     })
   };
 
   return (
     <div className="create-student">
-      <label htmlFor="studentFirstName">First Name:</label>
+      <FormLabel htmlFor="studentFirstName">First Name: </FormLabel>
       <input
         type="text"
         id="studentFirstName"
@@ -73,7 +76,7 @@ const CreateStudentPage = () => {
         onChange={handleFirstNameChange}
       />
       <br/>
-      <label htmlFor="studentLastName">Last Name:</label>
+      <FormLabel htmlFor="studentLastName">Last Name: </FormLabel>
       <input
         type="text"
         id="studentLastName"
@@ -81,7 +84,7 @@ const CreateStudentPage = () => {
         onChange={handleLastNameChange}
       />
       <br/>
-      <button onClick={handleCreateStudent}>Create</button>
+      <Button onClick={handleCreateStudent}>Create</Button>
     </div>
   )
 };

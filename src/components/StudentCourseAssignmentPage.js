@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
 import API_URL from '../Api';
+import { Table } from 'react-bootstrap';
 
 const StudentCourseAssignmentPage = () => {
     const { assignmentid, courseid } = useParams();
@@ -14,49 +15,27 @@ const StudentCourseAssignmentPage = () => {
         course: 0,
     });
 
-    const [account, setAccount] = useState({
-        username: 'default user',
-        email: 'default email',
-        create_time: 'yes',
-        id: 0,
-        auth_type: 'google',
-    });
-
     const [students, setStudents] = useState([]);
 
     useEffect(() => {
         let authtoken = localStorage.getItem('authtoken');
 
         setStudents([]);
-
-        axios.get(API_URL + 'getaccount', {
+        axios.get(API_URL + 'getassignmentref', {
             params: {
-                token: authtoken, // Add your parameters here
+                token: authtoken,
+                id: assignmentid,
             },
         })
             .then((res) => {
-                setAccount(res.data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        axios
-            .get(API_URL + 'getassignmentref', {
-                params: {
-                    token: authtoken,
-                    id: assignmentid,
-                },
-            })
-            .then((res) => {
                 setAssignment(res.data);
             });
-        axios
-            .get(API_URL + 'getstudents', {
-                params: {
-                    token: authtoken,
-                    course: courseid,
-                },
-            })
+        axios.get(API_URL + 'getstudents', {
+            params: {
+                token: authtoken,
+                course: courseid,
+            },
+        })
             .then((res) => {
                 if (res.data != null) {
                     setStudents(res.data);
@@ -64,7 +43,7 @@ const StudentCourseAssignmentPage = () => {
                     setStudents([]);
                 }
             });
-    }, [assignmentid]);
+    }, [assignmentid, courseid]);
 
     useEffect(() => {
         if (students[0]?.score) return;
@@ -92,7 +71,7 @@ const StudentCourseAssignmentPage = () => {
         Promise.all(updatedStudents).then((updatedStudentArray) => {
             setStudents(updatedStudentArray);
         });
-    }, [students]);
+    }, [students, assignmentid]);
 
     const handleGradeChange = (event, index) => {
         const newScore = event.target.value;
@@ -114,12 +93,12 @@ const StudentCourseAssignmentPage = () => {
             <h1 className="mb-4">Set Grades</h1>
             <div className="assignment-details">
                 <h2>{assignment.name}</h2>
-                <table className="table">
+                <Table bordered style={ {textAlign: "left"} }>
                     <thead className="thead-dark">
                         <tr>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Grade out of {assignment.weight}</th>
+                            <th style={ {width: "20%"} }>First Name</th>
+                            <th style={ {width: "20%"} }>Last Name</th>
+                            <th style={ {width: "60%"} }>Grade out of {assignment.weight}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -139,7 +118,7 @@ const StudentCourseAssignmentPage = () => {
                             </tr>
                         ))}
                     </tbody>
-                </table>
+                </Table>
             </div>
         </div>
     );
