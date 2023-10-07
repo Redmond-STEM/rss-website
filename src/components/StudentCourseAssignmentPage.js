@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
 import '../css/Table.css'; // Import the CSS file for styling
+import API_URL from '../Api';
 
 const StudentCourseAssignmentPage = () => {
     const { assignmentid, courseid } = useParams();
@@ -29,12 +30,11 @@ const StudentCourseAssignmentPage = () => {
 
         setStudents([]);
 
-        axios
-            .get('http://localhost:5000/api/getaccount', {
-                params: {
-                    token: authtoken, // Add your parameters here
-                },
-            })
+        axios.get(API_URL + 'getaccount', {
+            params: {
+                token: authtoken, // Add your parameters here
+            },
+        })
             .then((res) => {
                 setAccount(res.data);
             })
@@ -42,7 +42,7 @@ const StudentCourseAssignmentPage = () => {
                 console.error('Error:', error);
             });
         axios
-            .get('http://localhost:5000/api/getassignmentref', {
+            .get(API_URL + 'getassignmentref', {
                 params: {
                     token: authtoken,
                     id: assignmentid,
@@ -52,7 +52,7 @@ const StudentCourseAssignmentPage = () => {
                 setAssignment(res.data);
             });
         axios
-            .get('http://localhost:5000/api/getstudents', {
+            .get(API_URL + 'getstudents', {
                 params: {
                     token: authtoken,
                     course: courseid,
@@ -72,7 +72,7 @@ const StudentCourseAssignmentPage = () => {
         const updatedStudents = students.map(async (student) => {
             let scoreLoaded = true;
             const response = await axios
-                .get('http://localhost:5000/api/getassignment', {
+                .get(API_URL + 'getassignment', {
                     params: {
                         token: localStorage.getItem('authtoken'),
                         studentid: student.id,
@@ -101,7 +101,7 @@ const StudentCourseAssignmentPage = () => {
             const updatedStudents = [...students];
             updatedStudents[index] = { ...updatedStudents[index], score: newScore };
             setStudents(updatedStudents);
-            axios.post('http://localhost:5000/api/setassignment', {
+            axios.post(API_URL + 'setassignment', {
                 token: localStorage.getItem('authtoken'),
                 studentid: students[index].id,
                 refid: assignmentid,

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from 'react';
 import axios from "axios"
 import '../css/Table.css'; // Import the CSS file for styling
+import API_URL from '../Api';
 
 const StudentCoursesPage = () => {
 
@@ -33,7 +34,7 @@ const StudentCoursesPage = () => {
 
       setCourses([]);
 
-      axios.get("http://localhost:5000/api/getaccount", {
+      axios.get(API_URL + "getaccount", {
           params: {
               token: authtoken, // Add your parameters here
           }})
@@ -43,7 +44,7 @@ const StudentCoursesPage = () => {
       .catch((error) => {
           console.error("Error:", error);
       });
-      axios.get("http://localhost:5000/api/getstudent", {
+      axios.get(API_URL + "getstudent", {
           params: {
               token: authtoken,
               id: studentid
@@ -54,7 +55,7 @@ const StudentCoursesPage = () => {
       .catch((error) => {
           console.error("Error:", error);
       });
-      axios.get("http://localhost:5000/api/getstudentcourses", {
+      axios.get(API_URL + "getstudentcourses", {
           params: {
               token: authtoken,
               studentid: studentid
@@ -65,13 +66,15 @@ const StudentCoursesPage = () => {
           } else {
             setCourses([])
           }
+      }).catch((error) => {
+        setCourses([])
       })
   }, [studentid])
 
   useEffect(() => {
     if (courses[0]?.teacheremail) return;
     const updatedStudents = courses.map(async (course) => {
-      const response = await axios.get("http://localhost:5000/api/getaccount", {
+      const response = await axios.get(API_URL + "getaccount", {
         params: {
           id: course.teacher
         }

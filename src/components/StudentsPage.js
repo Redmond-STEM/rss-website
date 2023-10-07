@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
 import '../css/Table.css'; // Import the CSS file for styling
+import API_URL from '../Api';
 
 const StudentsPage = () => {
 
@@ -30,7 +31,7 @@ const StudentsPage = () => {
 
       setStudents([]);
 
-      axios.get("http://localhost:5000/api/getaccount", {
+      axios.get(API_URL + "getaccount", {
           params: {
               token: authtoken, // Add your parameters here
           }})
@@ -40,7 +41,7 @@ const StudentsPage = () => {
       .catch((error) => {
           console.error("Error:", error);
       });
-      axios.get("http://localhost:5000/api/getstudents", {
+      axios.get(API_URL + "getstudents", {
           params: {
               token: authtoken
           }})
@@ -69,7 +70,7 @@ const StudentsPage = () => {
       lastname: studentLastName
     }
 
-    axios.post("http://localhost:5000/api/createstudent", params).then((res) => { 
+    axios.post(API_URL + "createstudent", params).then((res) => { 
       const newStudent = {
         firstname: studentFirstName,
         lastname: studentLastName,
@@ -90,7 +91,7 @@ const StudentsPage = () => {
       token: localStorage.getItem("authtoken"),
       id: parseInt(id)
     }
-    axios.post("http://localhost:5000/api/deletestudent", params).then((res) => { 
+    axios.post(API_URL + "deletestudent", params).then((res) => { 
       updatedStudents.splice(index, 1);
       setStudents(updatedStudents);
     })

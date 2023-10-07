@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import token from "random-web-token"
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import API_URL from '../Api';
 
 const AdminLoginPage = () => {
 
@@ -25,7 +26,7 @@ const AdminLoginPage = () => {
       "type": "teacher",
       "token": authtoken
     }
-    axios.post("http://localhost:5000/api/loginaccount", account).then((res) => {
+    axios.post(API_URL + "loginaccount", account).then((res) => {
       if (res.status === 201) { 
         localStorage.setItem("authtoken", authtoken) 
       } 

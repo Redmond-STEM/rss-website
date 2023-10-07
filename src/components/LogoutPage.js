@@ -1,15 +1,14 @@
 import { googleLogout } from "@react-oauth/google"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-
-const client_id = "437685874727-3qdnsdngbton283ql05pog6u1cfhp985.apps.googleusercontent.com"
+import API_URL from "../Api"
 
 const LogoutPage = () => {
 
     let navigate = useNavigate()
 
     const onClick = () => {
-        axios.post("http://localhost:5000/api/logoutaccount", {
+        axios.post(API_URL + "logoutaccount", {
             token: localStorage.getItem("authtoken")
         })
         localStorage.removeItem("authtoken")

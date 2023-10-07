@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from 'react';
 import axios from "axios"
 import '../css/Table.css'; // Import the CSS file for styling
+import API_URL from '../Api';
 
 const RosterPage = () => {
 
@@ -26,7 +27,7 @@ const RosterPage = () => {
 
     setStudents([]);
 
-    axios.get("http://localhost:5000/api/getaccount", {
+    axios.get(API_URL + "getaccount", {
       params: {
         token: authtoken, // Add your parameters here
       }
@@ -37,7 +38,7 @@ const RosterPage = () => {
       .catch((error) => {
         console.error("Error:", error);
       });
-    axios.get("http://localhost:5000/api/getstudents", {
+    axios.get(API_URL + "getstudents", {
       params: {
         token: authtoken,
         course: courseid
@@ -55,7 +56,7 @@ const RosterPage = () => {
   useEffect(() => {
     if (students[0]?.parentemail) return;
     const updatedStudents = students.map(async (student) => {
-      const response = await axios.get("http://localhost:5000/api/getaccount", {
+      const response = await axios.get(API_URL + "getaccount", {
         params: {
           id: student.parent
         }

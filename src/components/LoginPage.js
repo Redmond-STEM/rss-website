@@ -4,6 +4,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
 import token from "random-web-token"
 import { useNavigate } from "react-router-dom"
+import API_URL from "../Api";
 
 const client_id = "437685874727-3qdnsdngbton283ql05pog6u1cfhp985.apps.googleusercontent.com"
 
@@ -25,7 +26,7 @@ const LoginPage = () => {
                         "token": authtoken,
                         "type": "google"
                     }
-                    axios.post("http://localhost:5000/api/loginaccount", account).then((res) => {
+                    axios.post(API_URL + "loginaccount", account).then((res) => {
                         if (res.status === 201) { 
                             localStorage.setItem("authtoken", authtoken) 
                         } 

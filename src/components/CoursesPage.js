@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios"
 import { useState, useEffect } from "react";
+import API_URL from "../Api";
 
 const CoursesPage = () => {
 
@@ -16,7 +17,7 @@ const CoursesPage = () => {
 
     useEffect(() => {
         let authtoken = localStorage.getItem("authtoken")
-        axios.get("http://localhost:5000/api/getaccount", {
+        axios.get(API_URL + "getaccount", {
         params: {
             token: authtoken, // Add your parameters here
         }})

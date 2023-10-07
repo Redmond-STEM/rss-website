@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from 'react';
 import axios from "axios"
 import '../css/Table.css'; // Import the CSS file for styling
+import API_URL from '../Api';
 
 const AssignmentPage = () => {
 
@@ -28,7 +29,7 @@ const AssignmentPage = () => {
 
       setAssignments([]);
 
-      axios.get("http://localhost:5000/api/getaccount", {
+      axios.get(API_URL + "getaccount", {
           params: {
               token: authtoken, // Add your parameters here
           }})
@@ -38,7 +39,7 @@ const AssignmentPage = () => {
       .catch((error) => {
           console.error("Error:", error);
       });
-      axios.get("http://localhost:5000/api/getassignmentrefs", {
+      axios.get(API_URL + "getassignmentrefs", {
           params: {
               token: authtoken,
               id: courseid
@@ -72,7 +73,7 @@ const AssignmentPage = () => {
       }
     }
 
-    axios.post("http://localhost:5000/api/createassignment", params).then((res) => { 
+    axios.post(API_URL + "createassignment", params).then((res) => { 
       const newAssignment = {
         name: assignmentName,
         weight: assignmentWeightage,
@@ -93,7 +94,7 @@ const AssignmentPage = () => {
       token: localStorage.getItem("authtoken"),
       id: parseInt(id)
     }
-    axios.post("http://localhost:5000/api/deleteassignment", params).then((res) => { 
+    axios.post(API_URL + "deleteassignment", params).then((res) => { 
       updatedAssignments.splice(index, 1);
       setAssignments(updatedAssignments);
     })

@@ -3,6 +3,7 @@ import { useGoogleOneTapLogin } from "@react-oauth/google";
 import token from "random-web-token"
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import API_URL from "../Api";
 
 const HomePage = () => {
 
@@ -16,7 +17,7 @@ const HomePage = () => {
             "type": "google",
             "token": authtoken
           }
-          axios.post("http://localhost:5000/api/loginaccount", account).then((res) => { if (res.status === 201) localStorage.setItem("authtoken", authtoken) })
+          axios.post(API_URL + "loginaccount", account).then((res) => { if (res.status === 201) localStorage.setItem("authtoken", authtoken) })
         },
         disabled: localStorage.getItem("authtoken") != null
     })
