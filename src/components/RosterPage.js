@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useParams } from "react-router-dom";
 import { useEffect } from 'react';
+import Table from 'react-bootstrap/Table';
 import axios from "axios" // Import the CSS file for styling
 import API_URL from '../Api';
 
@@ -78,7 +79,7 @@ const RosterPage = () => {
       <h1 className="mb-4">Roster Page</h1>
       <div className="student-list">
         <h2 className="mb-3">Students</h2>
-        <table className="table">
+        <Table bordered responsive="md">
           <thead className="thead-dark">
             <tr>
               <th scope="col">First Name</th>
@@ -95,7 +96,7 @@ const RosterPage = () => {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
     </div>
 

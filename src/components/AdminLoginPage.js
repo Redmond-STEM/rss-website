@@ -44,12 +44,14 @@ const AdminLoginPage = () => {
           value={email}
           onChange={handleEmailChange}
         />
+        <br/>
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={handlePasswordChange}
         />
+        <br/>
         <button onClick={handleSubmit}>Submit</button>
       </div>
     </div>
