@@ -21,6 +21,7 @@ import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from 'react';
 import axios from "axios";
+import NotFoundPage from './components/NotFoundPage';
 const client_id = "553535256675-gtounck06hsj2m2aoe209aqjjhsnqplf.apps.googleusercontent.com"
 
 function App() {
@@ -83,14 +84,15 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/adminlogin" element={<AdminLoginPage />} />
             <Route path="/logout" element={<LogoutPage />} />
-            <Route path="/course/:courseid/assignments" element={<AssignmentsPage />} />
-            <Route path="/course/:courseid/assignments/:assignmentid" element={<StudentCourseAssignmentPage />} />
-            <Route path="/course/:courseid" element={<CoursePage />} />
-            <Route path="/course/:courseid/roster" element={<RosterPage />} />
+            <Route path="/teacherportal/course/:courseid/assignments" element={<AssignmentsPage />} />
+            <Route path="/teacherportal/course/:courseid/assignments/:assignmentid" element={<StudentCourseAssignmentPage />} />
+            <Route path="/teacherportal/course/:courseid" element={<CoursePage />} />
+            <Route path="/teacherportal/course/:courseid/roster" element={<RosterPage />} />
             <Route path="/parentportal/:studentid/courses" element={<StudentCoursesPage />} />
             <Route path="/parentportal" element={<ParentPortal />} />
             <Route path="/parentportal/createstudent" element={<CreateStudentPage />} />
             <Route path="/teacherportal" element={<TeacherPortalPage />} />
+            <Route path="/notfound" element={<NotFoundPage />} />
           </Routes>
         </Router>
       </GoogleOAuthProvider>

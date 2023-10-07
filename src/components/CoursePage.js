@@ -1,23 +1,15 @@
 import React from "react";
 import axios from "axios"
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import API_URL from "../Api";
 import Button from "react-bootstrap/Button";
 
 const CoursePage = () => {
 
-    const { courseid } = useParams()
+    let navigate = useNavigate()
 
-    const [account, setAccount] = useState(
-        {
-            "username": "default user",
-            "email": "default email",
-            "create_time": "yes",
-            "id": 0,
-            "auth_type": "google"
-        }
-    )
+    const { courseid } = useParams()
 
     const [course, setCourse] = useState(
         {
@@ -33,16 +25,6 @@ const CoursePage = () => {
 
     useEffect(() => {
         let authtoken = localStorage.getItem("authtoken")
-        axios.get(API_URL + "getaccount", {
-            params: {
-                token: authtoken, // Add your parameters here
-            }})
-        .then((res) => {
-            setAccount(res.data)
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-        });
         axios.get(API_URL + "getcourse", {
             params: {
                 token: authtoken,
@@ -51,6 +33,11 @@ const CoursePage = () => {
         .then((res) => { 
             setCourse(res.data)
         })
+        .catch((error) => {
+            if (error.response.status === 404) {
+                navigate("/notfound")
+            }
+        });
     }, [])
 
     return (
@@ -58,9 +45,9 @@ const CoursePage = () => {
             <h1>Course Page</h1>
             <p>Name: {course.name} Time: {course.time}</p>
             <p>Duration: {course.duration} weeks</p>
-            <Button href={"/course/" + courseid + "/roster"}>View Roster</Button>
+            <Button href={"/teacherportal/course/" + courseid + "/roster"}>View Roster</Button>
             <br></br>
-            <Button href={"/course/" + courseid + "/assignments"}>View Assignments</Button>
+            <Button href={"/teacherportal/course/" + courseid + "/assignments"}>View Assignments</Button>
         </div>
     );
 
