@@ -35,7 +35,12 @@ const ParentPortalPage = () => {
           setStudents([])
         }
       })
-  }, [courseid])
+      .catch((error) => {
+        if (error.response.status === 404) {
+          navigate("/notfound")
+        }
+      })
+  }, [courseid, navigate])
 
   const handleOpenDeleteModal = (index) => {
     setStudentToDeleteIndex(index);

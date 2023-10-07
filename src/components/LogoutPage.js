@@ -20,10 +20,7 @@ const LogoutPage = () => {
         })
         localStorage.removeItem("authtoken")
         googleLogout()
-        setTimeout(() => {
-            navigate("/")
-        }, 1000)
-
+        navigate("/")
     }
 
     return (

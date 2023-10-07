@@ -1,12 +1,14 @@
 // AssignmentTracker.js
 import React, { useState } from 'react';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import axios from "axios" // Import the CSS file for styling
 import API_URL from '../Api';
 
 const RosterPage = () => {
+
+  const navigate = useNavigate()
 
   const { courseid } = useParams()
   const [students, setStudents] = useState([]);
@@ -28,6 +30,9 @@ const RosterPage = () => {
         } else {
           setStudents([])
         }
+      })
+      .catch((error) => {
+        navigate("/notfound")
       })
   }, [courseid])
 

@@ -1,6 +1,6 @@
 // AssignmentTracker.js
 import React, { useState } from 'react';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
 import axios from "axios"
 import '../css/Table.css'; // Import the CSS file for styling
@@ -8,6 +8,8 @@ import API_URL from '../Api';
 import { Table, Button } from 'react-bootstrap';
 
 const StudentCoursesPage = () => {
+
+  const navigate = useNavigate()
 
   const { studentid } = useParams()
 
@@ -34,7 +36,7 @@ const StudentCoursesPage = () => {
           setStudent(res.data)
       })
       .catch((error) => {
-          console.error("Error:", error);
+          navigate("/notfound")
       });
       axios.get(API_URL + "getstudentcourses", {
           params: {

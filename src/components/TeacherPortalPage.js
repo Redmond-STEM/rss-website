@@ -18,7 +18,19 @@ const TeacherPortalPage = () => {
 
         setCourses([]);
 
-        //load teacher courses here
+        axios.get(API_URL + "getteachercourses", {
+            params: {
+                token: authtoken
+            }
+        }).then((res) => {
+            if (res.data != null) {
+                setCourses(res.data)
+            } else {
+                setCourses([])
+            }
+        }).catch((error) => {
+            navigate("/notfound")
+        })
     }, [])
 
     return (
@@ -26,12 +38,12 @@ const TeacherPortalPage = () => {
             <h1>Courses Page</h1>
             <div className="courses-page">
                 <h2>Courses</h2>
-                <Table bordered style={ {textAlign: "left"} }>
+                <Table bordered style={{ textAlign: "left" }}>
                     <thead>
                         <tr>
-                            <th style={ {width: "20%"} }>Course Name</th>
-                            <th style={ {width: "20%"} }>Time</th>
-                            <th style={ {width: "60%"} }>View Course</th>
+                            <th style={{ width: "20%" }}>Course Name</th>
+                            <th style={{ width: "20%" }}>Time</th>
+                            <th style={{ width: "60%" }}>View Course</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,7 +51,7 @@ const TeacherPortalPage = () => {
                             <tr key={index}>
                                 <td>{course.name}</td>
                                 <td>{course.time}</td>
-                                <td><Button href={"/course/" + course.id}>View Course</Button></td>
+                                <td><Button href={"/teacherportal/course/" + course.id}>View Course</Button></td>
                             </tr>
                         ))}
                     </tbody>

@@ -56,7 +56,7 @@ function App() {
       <GoogleOAuthProvider clientId={client_id}>
         <Navbar bg="dark" data-bs-theme="dark">
           <Container>
-            <Navbar.Brand href="/"><img src="https://images-platform.99static.com/F5916MyPoUC-QQ142MnSl1U69Zc=/193x355:1738x1900/fit-in/900x675/99designs-contests-attachments/100/100327/attachment_100327841" width="40" height="40" /></Navbar.Brand>
+            <Navbar.Brand href="/"><img src="logo.jpeg" width="40" height="40" /></Navbar.Brand>
             <Navbar.Brand href="/">Redmond STEM</Navbar.Brand>
             <Nav className="me-auto">
               <Nav.Link href="/parentportal">Parent Portal</Nav.Link>
@@ -67,7 +67,7 @@ function App() {
                 <NavDropdown.Item>Contact Us</NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <NavDropdown title={<img src="https://th.bing.com/th/id/R.2c6e94aaf20d66610132b533ae100324?rik=B6pgyC2mChH8rA&pid=ImgRaw&r=0" alt="Profile" className="profile-picture" width="40" height="40" />} id="account-dropdown" color="white">
+            <NavDropdown title={<img src="profile.png" alt="Profile" className="profile-picture" width="40" height="40" />} id="account-dropdown" color="white">
               <NavDropdown.Item>Hi {account.username}</NavDropdown.Item>
               <NavDropdown.Item href="/login">Login</NavDropdown.Item>
               <NavDropdown.Item href="/logout">Logout</NavDropdown.Item>
