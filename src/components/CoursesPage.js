@@ -2,6 +2,8 @@ import React from "react";
 import axios from "axios"
 import { useState, useEffect } from "react";
 import API_URL from "../Api";
+import Button from "react-bootstrap/Button"
+import "bootstrap/dist/css/bootstrap.min.css"
 
 const CoursesPage = () => {
 
@@ -34,6 +36,7 @@ const CoursesPage = () => {
             <h1>Courses Page</h1>
             <p>Name: {account.username} Email: {account.email}</p>
             <p>Auth: {account.auth_type}</p>
+            <Button>Test Button</Button>
         </div>
     );
 

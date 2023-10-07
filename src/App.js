@@ -17,8 +17,6 @@ import StudentCourseAssignmentPage from "./components/StudentCourseAssignmentPag
 import StudentCoursesPage from './components/StudentCoursesPage';
 const client_id = "553535256675-gtounck06hsj2m2aoe209aqjjhsnqplf.apps.googleusercontent.com"
 
-  const API_URL = "http://localhost:5000/api/";
-
   function App() {
 
     return (
