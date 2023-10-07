@@ -85,6 +85,7 @@ const StudentsPage = () => {
   const handleDeleteStudent = (index) => {
     const updatedStudents = [...students];
     const id = updatedStudents[index].id
+    console.log(id)
     const params = {
       token: localStorage.getItem("authtoken"),
       id: parseInt(id)

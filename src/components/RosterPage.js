@@ -10,43 +10,45 @@ const RosterPage = () => {
   const { courseid } = useParams()
 
   const [account, setAccount] = useState(
-      {
-          "username": "default user",
-          "email": "default email",
-          "create_time": "yes",
-          "id": 0,
-          "auth_type": "google"
-      }
+    {
+      "username": "default user",
+      "email": "default email",
+      "create_time": "yes",
+      "id": 0,
+      "auth_type": "google"
+    }
   )
 
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
-      let authtoken = localStorage.getItem("authtoken")
+    let authtoken = localStorage.getItem("authtoken")
 
-      setStudents([]);
+    setStudents([]);
 
-      axios.get("http://localhost:5000/api/getaccount", {
-          params: {
-              token: authtoken, // Add your parameters here
-          }})
+    axios.get("http://localhost:5000/api/getaccount", {
+      params: {
+        token: authtoken, // Add your parameters here
+      }
+    })
       .then((res) => {
-          setAccount(res.data)
+        setAccount(res.data)
       })
       .catch((error) => {
-          console.error("Error:", error);
+        console.error("Error:", error);
       });
-      axios.get("http://localhost:5000/api/getstudents", {
-          params: {
-              token: authtoken,
-              course: courseid
-          }})
-      .then((res) => { 
-          if (res.data != null) {
-            setStudents(res.data)
-          } else {
-            setStudents([])
-          }
+    axios.get("http://localhost:5000/api/getstudents", {
+      params: {
+        token: authtoken,
+        course: courseid
+      }
+    })
+      .then((res) => {
+        if (res.data != null) {
+          setStudents(res.data)
+        } else {
+          setStudents([])
+        }
       })
   }, [courseid])
 
@@ -58,14 +60,14 @@ const RosterPage = () => {
           id: student.parent
         }
       });
-  
+
       if (response.data.email != null) {
         return { ...student, parentemail: response.data.email };
       } else {
         return student;
       }
     });
-  
+
     Promise.all(updatedStudents).then((updatedStudentArray) => {
       setStudents(updatedStudentArray);
     });

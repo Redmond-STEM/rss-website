@@ -76,7 +76,7 @@ const AssignmentPage = () => {
       const newAssignment = {
         name: assignmentName,
         weight: assignmentWeightage,
-        id: res.data.assignmentId
+        id: res.data.assignmentId.insertId
       };
   
       setAssignments([...assignments, newAssignment]);
@@ -88,6 +88,7 @@ const AssignmentPage = () => {
   const handleDeleteAssignment = (index) => {
     const updatedAssignments = [...assignments];
     const id = updatedAssignments[index].id
+    console.log(id)
     const params = {
       token: localStorage.getItem("authtoken"),
       id: parseInt(id)
