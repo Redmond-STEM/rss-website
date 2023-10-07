@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
-import '../css/Table.css'; // Import the CSS file for styling
 import API_URL from '../Api';
 
 const StudentCourseAssignmentPage = () => {
@@ -112,15 +111,15 @@ const StudentCourseAssignmentPage = () => {
 
     return (
         <div className="assignment-page">
-            <h1>Set Grades</h1>
-            <div className="assignment-page">
+            <h1 className="mb-4">Set Grades</h1>
+            <div className="assignment-details">
                 <h2>{assignment.name}</h2>
-                <table>
-                    <thead>
+                <table className="table">
+                    <thead className="thead-dark">
                         <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Grade out of {assignment.weight}</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Grade out of {assignment.weight}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -131,6 +130,7 @@ const StudentCourseAssignmentPage = () => {
                                 <td>
                                     <input
                                         type="text"
+                                        className="form-control"
                                         onChange={(event) => handleGradeChange(event, index)}
                                         placeholder={student.score === "0" ? "0" : ""}
                                         value={student.score === "0" ? "" : student.score}

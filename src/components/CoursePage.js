@@ -3,6 +3,7 @@ import axios from "axios"
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import API_URL from "../Api";
+import Button from "react-bootstrap/Button";
 
 const CoursePage = () => {
 
@@ -57,6 +58,9 @@ const CoursePage = () => {
             <h1>Course Page</h1>
             <p>Name: {course.name} Time: {course.time}</p>
             <p>Duration: {course.duration} weeks</p>
+            <Button href={"/course/" + courseid + "/roster"}>View Roster</Button>
+            <br></br>
+            <Button href={"/course/" + courseid + "/assignments"}>View Assignments</Button>
         </div>
     );
 

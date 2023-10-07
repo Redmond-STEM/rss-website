@@ -2,8 +2,7 @@
 import React, { useState } from 'react';
 import { useParams } from "react-router-dom";
 import { useEffect } from 'react';
-import axios from "axios"
-import '../css/Table.css'; // Import the CSS file for styling
+import axios from "axios" // Import the CSS file for styling
 import API_URL from '../Api';
 
 const RosterPage = () => {
@@ -76,15 +75,15 @@ const RosterPage = () => {
 
   return (
     <div className="roster-page">
-      <h1>Roster Page</h1>
-      <div className="roster-page">
-        <h2>Students</h2>
-        <table>
-          <thead>
+      <h1 className="mb-4">Roster Page</h1>
+      <div className="student-list">
+        <h2 className="mb-3">Students</h2>
+        <table className="table">
+          <thead className="thead-dark">
             <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Parent Email</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">Parent Email</th>
             </tr>
           </thead>
           <tbody>
@@ -99,6 +98,7 @@ const RosterPage = () => {
         </table>
       </div>
     </div>
+
   );
 };
 
