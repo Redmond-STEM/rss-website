@@ -13,16 +13,6 @@ const AssignmentPage = () => {
 
   const { courseid } = useParams()
 
-  const [account, setAccount] = useState(
-      {
-          "username": "default user",
-          "email": "default email",
-          "create_time": "yes",
-          "id": 0,
-          "auth_type": "google"
-      }
-  )
-
   const [assignments, setAssignments] = useState([]);
   const [assignmentName, setAssignmentName] = useState('');
   const [assignmentWeightage, setAssignmentWeightage] = useState('');
@@ -34,16 +24,6 @@ const AssignmentPage = () => {
 
       setAssignments([]);
 
-      axios.get(API_URL + "getaccount", {
-          params: {
-              token: authtoken, // Add your parameters here
-          }})
-      .then((res) => {
-          setAccount(res.data)
-      })
-      .catch((error) => {
-        navigate("/notfound")
-      });
       axios.get(API_URL + "getassignmentrefs", {
           params: {
               token: authtoken,
@@ -59,7 +39,7 @@ const AssignmentPage = () => {
       .catch((error) => {
         navigate("/notfound")
       })
-  }, [courseid])
+  }, [courseid, navigate])
 
   const handleNameChange = (e) => {
     setAssignmentName(e.target.value);
@@ -70,8 +50,6 @@ const AssignmentPage = () => {
   };
 
   const handleCreateAssignment = () => {
-    console.log(assignmentName, parseInt(assignmentWeightage))
-
     const params = {
       token: localStorage.getItem("authtoken"),
       assignment: {
@@ -104,30 +82,29 @@ const AssignmentPage = () => {
     setAssignmentToDeleteIndex(null);
   };  
 
-  const handleDeleteAssignment = (index) => {
+  const handleDeleteAssignment = () => {
     const updatedAssignments = [...assignments];
-    const id = updatedAssignments[index].id
+    const id = updatedAssignments[assignmentToDeleteIndex].id
     console.log(id)
     const params = {
       token: localStorage.getItem("authtoken"),
       id: parseInt(id)
     }
     axios.post(API_URL + "deleteassignment", params).then((res) => { 
-      updatedAssignments.splice(index, 1);
+      updatedAssignments.splice(assignmentToDeleteIndex, 1);
       setAssignments(updatedAssignments);
     })
+    handleCloseDeleteModal()
   };
 
   return (
     <div className="assignment-page">
-      <h1>Assignment Page</h1>
       <div className="assignment-page">
-        <h2>Assignments</h2>
         <Table bordered style={ {textAlign: "left"} }>
           <thead>
             <tr>
               <th style={ {width: "20%"} }>Name</th>
-              <th style={ {width: "80%"} }>Weightage</th>
+              <th style={ {width: "10%"} }>Weightage</th>
             </tr>
           </thead>
           <tbody>
@@ -139,6 +116,9 @@ const AssignmentPage = () => {
                   <Button  variant="danger" onClick={() => handleOpenDeleteModal(index)}>
                     Delete
                   </Button>
+                </td>
+                <td>
+                  <Button href={"/teacherportal/course/"+ assignment.course + "/assignments/" + assignment.id}>Set Grades</Button>
                 </td>
               </tr>
             ))}
@@ -155,7 +135,7 @@ const AssignmentPage = () => {
             <Button variant="secondary" onClick={handleCloseDeleteModal}>
               Cancel
             </Button>
-            <Button variant="danger" onClick={handleDeleteAssignment(assignmentToDeleteIndex)}>
+            <Button variant="danger" onClick={handleDeleteAssignment}>
               Delete
             </Button>
           </Modal.Footer>

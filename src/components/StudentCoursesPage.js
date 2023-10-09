@@ -15,44 +15,46 @@ const StudentCoursesPage = () => {
 
   const [student, setStudent] = useState(
     {
-        "firstname": "first",
-        "lastname": "name",
+      "firstname": "first",
+      "lastname": "name",
     }
   )
 
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-      let authtoken = localStorage.getItem("authtoken")
+    let authtoken = localStorage.getItem("authtoken")
 
-      setCourses([]);
+    setCourses([]);
 
-      axios.get(API_URL + "getstudent", {
-          params: {
-              token: authtoken,
-              id: studentid
-          }})
+    axios.get(API_URL + "getstudent", {
+      params: {
+        token: authtoken,
+        id: studentid
+      }
+    })
       .then((res) => {
-          setStudent(res.data)
+        setStudent(res.data)
       })
       .catch((error) => {
-          navigate("/notfound")
+        navigate("/notfound")
       });
-      axios.get(API_URL + "getstudentcourses", {
-          params: {
-              token: authtoken,
-              studentid: studentid
-          }})
-      .then((res) => { 
-          if (res.data != null) {
-            setCourses(res.data)
-          } else {
-            setCourses([])
-          }
+    axios.get(API_URL + "getstudentcourses", {
+      params: {
+        token: authtoken,
+        studentid: studentid
+      }
+    })
+      .then((res) => {
+        if (res.data != null) {
+          setCourses(res.data)
+        } else {
+          setCourses([])
+        }
       }).catch((error) => {
         setCourses([])
       })
-  }, [studentid])
+  }, [studentid, navigate])
 
   useEffect(() => {
     if (courses[0]?.teacheremail) return;
@@ -62,14 +64,14 @@ const StudentCoursesPage = () => {
           id: course.teacher
         }
       });
-  
+
       if (response.data.email != null) {
         return { ...course, teacheremail: response.data.email };
       } else {
         return course;
       }
     });
-  
+
     Promise.all(updatedStudents).then((updatedStudentArray) => {
       setCourses(updatedStudentArray);
     });
@@ -80,21 +82,25 @@ const StudentCoursesPage = () => {
       <h1>Courses Page</h1>
       <div className="courses-page">
         <h2>Courses for {student.firstname} {student.lastname}</h2>
-        <Table bordered style={ {textAlign: "left"} }>
+        <Table bordered style={{ textAlign: "left" }}>
           <thead>
             <tr>
-              <th style={ {width: "30%"} }>Course Name</th>
-              <th style={ {width: "30%"} }>Time</th>
-              <th style={ {width: "30%"} }>Teacher Email</th>
+              <th style={{ width: "15%" }}>Course Name</th>
+              <th style={{ width: "15%" }}>Start Date</th>
+              <th style={{ width: "15%" }}>End Date</th>
+              <th style={{ width: "15%" }}>Time</th>
+              <th style={{ width: "15%" }}>Teacher Email</th>
             </tr>
           </thead>
           <tbody>
             {courses.map((course, index) => (
               <tr key={index}>
                 <td>{course.name}</td>
-                <td>{course.time}</td>
+                <td>{new Date(course.startdate).toDateString()}</td>
+                <td>{new Date(course.enddate).toDateString()}</td>
+                <td>{new Date(course.startdate).toLocaleTimeString() + " to " + new Date(course.enddate).toLocaleTimeString()}</td>
                 <td>{course.teacheremail}</td>
-                <td><Button>View Grades</Button></td>
+                <td><Button href={"/parentportal/" + studentid + "/courses/" + course.id}>View Grades</Button></td>
               </tr>
             ))}
           </tbody>

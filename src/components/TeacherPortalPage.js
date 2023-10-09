@@ -1,6 +1,6 @@
 // AssignmentTracker.js
 import React, { useState } from 'react';
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
 import axios from "axios"
 import '../css/Table.css'; // Import the CSS file for styling
@@ -31,26 +31,27 @@ const TeacherPortalPage = () => {
         }).catch((error) => {
             navigate("/notfound")
         })
-    }, [])
+    }, [navigate])
 
     return (
         <div className="courses-page">
-            <h1>Courses Page</h1>
             <div className="courses-page">
-                <h2>Courses</h2>
                 <Table bordered style={{ textAlign: "left" }}>
                     <thead>
                         <tr>
                             <th style={{ width: "20%" }}>Course Name</th>
+                            <th style={{ width: "10%" }}>Start Date</th>
+                            <th style={{ width: "10%" }}>End Date</th>
                             <th style={{ width: "20%" }}>Time</th>
-                            <th style={{ width: "60%" }}>View Course</th>
                         </tr>
                     </thead>
                     <tbody>
                         {courses.map((course, index) => (
                             <tr key={index}>
                                 <td>{course.name}</td>
-                                <td>{course.time}</td>
+                                <td>{new Date(course.startdate).toDateString()}</td>
+                                <td>{new Date(course.enddate).toDateString()}</td>
+                                <td>{new Date(course.startdate).toLocaleTimeString() + " to " + new Date(course.enddate).toLocaleTimeString()}</td>
                                 <td><Button href={"/teacherportal/course/" + course.id}>View Course</Button></td>
                             </tr>
                         ))}
