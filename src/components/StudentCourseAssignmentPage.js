@@ -52,7 +52,7 @@ const StudentCourseAssignmentPage = () => {
             .catch((error) => {
                 navigate("/notfound")
             })
-    }, [assignmentid, courseid]);
+    }, [assignmentid, courseid, navigate]);
 
     useEffect(() => {
         if (students[0]?.score) return;
@@ -84,7 +84,7 @@ const StudentCourseAssignmentPage = () => {
 
     const handleGradeChange = (event, index) => {
         const newScore = event.target.value;
-        if (newScore == "") {   
+        if (newScore === "") {   
             const updatedStudents = [...students];
             updatedStudents[index] = { ...updatedStudents[index], score: "0" };
             setStudents(updatedStudents);
