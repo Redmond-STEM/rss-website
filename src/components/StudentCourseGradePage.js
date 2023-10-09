@@ -30,7 +30,7 @@ const StudentCourseGradePage = () => {
             .catch((error) => {
                 navigate("/notfound")
             })
-    }, [studentid, courseid]);
+    }, [studentid, courseid, navigate]);
 
     return (
         <div className="grades-page">

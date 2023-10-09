@@ -1,11 +1,8 @@
-import React, { useEffect } from "react";
 import { useGoogleOneTapLogin } from "@react-oauth/google";
 import token from "random-web-token"
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import API_URL from "../Api";
-
-const accountLoaded = false;
 
 const HomePage = () => {
 
