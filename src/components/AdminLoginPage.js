@@ -30,7 +30,7 @@ const AdminLoginPage = () => {
       if (res.status === 201) { 
         localStorage.setItem("authtoken", authtoken) 
       } 
-      navigate("/#/teacherportal") 
+      navigate("/teacherportal") 
     })
     .catch((error) => {
       navigate("/notfound")
