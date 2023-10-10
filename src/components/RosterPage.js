@@ -53,7 +53,7 @@ const RosterPage = () => {
         }
       })
       .catch((error) => {
-        navigate("/#/notfound")
+        navigate("/notfound")
       })
   }, [courseid, navigate])
 

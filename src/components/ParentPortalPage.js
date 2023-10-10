@@ -33,7 +33,7 @@ const ParentPortalPage = () => {
       })
       .catch((error) => {
         if (error.response.status === 404) {
-          navigate("/#/notfound")
+          navigate("/notfound")
         }
       })
   }, [courseid, navigate])

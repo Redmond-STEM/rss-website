@@ -34,7 +34,7 @@ const StudentCourseAssignmentPage = () => {
                 setAssignment(res.data);
             })
             .catch((error) => {
-                navigate("/#/notfound")
+                navigate("/notfound")
             })
         axios.get(API_URL + 'getstudents', {
             params: {
@@ -50,7 +50,7 @@ const StudentCourseAssignmentPage = () => {
                 }
             })
             .catch((error) => {
-                navigate("/#/notfound")
+                navigate("/notfound")
             })
     }, [assignmentid, courseid, navigate]);
 

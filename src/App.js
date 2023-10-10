@@ -71,9 +71,9 @@ function App() {
             </Nav>
             <NavDropdown title={<img src={profile} alt="Profile" className="profile-picture" width="40" height="40" />} id="account-dropdown" color="white">
               <NavDropdown.Item>Hi {account.username}</NavDropdown.Item>
-              <NavDropdown.Item href="/login">Login</NavDropdown.Item>
-              <NavDropdown.Item href="/logout">Logout</NavDropdown.Item>
-              <NavDropdown.Item href="/adminlogin">Admin Login</NavDropdown.Item>
+              <NavDropdown.Item href="/#/login">Login</NavDropdown.Item>
+              <NavDropdown.Item href="/#/logout">Logout</NavDropdown.Item>
+              <NavDropdown.Item href="/#/adminlogin">Admin Login</NavDropdown.Item>
             </NavDropdown>
           </Container>
         </Navbar>

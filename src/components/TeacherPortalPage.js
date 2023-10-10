@@ -29,7 +29,7 @@ const TeacherPortalPage = () => {
                 setCourses([])
             }
         }).catch((error) => {
-            navigate("/#/notfound")
+            navigate("/notfound")
         })
     }, [navigate])
 

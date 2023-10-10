@@ -37,7 +37,7 @@ const StudentCoursesPage = () => {
         setStudent(res.data)
       })
       .catch((error) => {
-        navigate("/#/notfound")
+        navigate("/notfound")
       });
     axios.get(API_URL + "getstudentcourses", {
       params: {

@@ -37,7 +37,7 @@ const AssignmentPage = () => {
           }
       })
       .catch((error) => {
-        navigate("/#/notfound")
+        navigate("/notfound")
       })
   }, [courseid, navigate])
 

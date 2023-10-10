@@ -28,7 +28,7 @@ const StudentCourseGradePage = () => {
                 setAssignments(res.data);
             })
             .catch((error) => {
-                navigate("/#/notfound")
+                navigate("/notfound")
             })
     }, [studentid, courseid, navigate]);
 

@@ -33,7 +33,7 @@ const AdminLoginPage = () => {
       navigate("/#/teacherportal") 
     })
     .catch((error) => {
-      navigate("/#/notfound")
+      navigate("/notfound")
     })
   };
 
