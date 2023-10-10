@@ -11,30 +11,31 @@ const AssignmentPage = () => {
 
   const navigate = useNavigate()
 
-  const { courseid } = useParams()
-
   const [assignments, setAssignments] = useState([]);
   const [assignmentName, setAssignmentName] = useState('');
   const [assignmentWeightage, setAssignmentWeightage] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [assignmentToDeleteIndex, setAssignmentToDeleteIndex] = useState(null);
 
+  const { courseid } = useParams()
+
   useEffect(() => {
-      let authtoken = localStorage.getItem("authtoken")
+    let authtoken = localStorage.getItem("authtoken")
 
-      setAssignments([]);
+    setAssignments([]);
 
-      axios.get(API_URL + "getassignmentrefs", {
-          params: {
-              token: authtoken,
-              id: courseid
-          }})
-      .then((res) => { 
-          if (res.data != null) {
-            setAssignments(res.data)
-          } else {
-            setAssignments([])
-          }
+    axios.get(API_URL + "getassignmentrefs", {
+      params: {
+        token: authtoken,
+        id: courseid
+      }
+    })
+      .then((res) => {
+        if (res.data != null) {
+          setAssignments(res.data)
+        } else {
+          setAssignments([])
+        }
       })
       .catch((error) => {
         navigate("/notfound")
@@ -59,17 +60,17 @@ const AssignmentPage = () => {
       }
     }
 
-    axios.post(API_URL + "createassignment", params).then((res) => { 
+    axios.post(API_URL + "createassignment", params).then((res) => {
       const newAssignment = {
         name: assignmentName,
         weight: assignmentWeightage,
         id: res.data.assignmentId.insertId
       };
-  
+
       setAssignments([...assignments, newAssignment]);
       setAssignmentName('');
       setAssignmentWeightage('');
-     })
+    })
   };
 
   const handleOpenDeleteModal = (index) => {
@@ -80,7 +81,7 @@ const AssignmentPage = () => {
   const handleCloseDeleteModal = () => {
     setShowDeleteModal(false);
     setAssignmentToDeleteIndex(null);
-  };  
+  };
 
   const handleDeleteAssignment = () => {
     const updatedAssignments = [...assignments];
@@ -90,7 +91,7 @@ const AssignmentPage = () => {
       token: localStorage.getItem("authtoken"),
       id: parseInt(id)
     }
-    axios.post(API_URL + "deleteassignment", params).then((res) => { 
+    axios.post(API_URL + "deleteassignment", params).then((res) => {
       updatedAssignments.splice(assignmentToDeleteIndex, 1);
       setAssignments(updatedAssignments);
     })
@@ -106,11 +107,11 @@ const AssignmentPage = () => {
   return (
     <div className="assignment-page">
       <div className="assignment-page">
-        <Table bordered style={ {textAlign: "left"} }>
+        <Table bordered style={{ textAlign: "left" }}>
           <thead>
             <tr>
-              <th style={ {width: "20%"} }>Name</th>
-              <th style={ {width: "10%"} }>Weightage</th>
+              <th style={{ width: "20%" }}>Name</th>
+              <th style={{ width: "10%" }}>Weightage</th>
             </tr>
           </thead>
           <tbody>
@@ -119,7 +120,7 @@ const AssignmentPage = () => {
                 <td>{assignment.name}</td>
                 <td>{assignment.weight}</td>
                 <td>
-                  <Button  variant="danger" onClick={() => handleOpenDeleteModal(index)}>
+                  <Button variant="danger" onClick={() => handleOpenDeleteModal(index)}>
                     Delete
                   </Button>
                 </td>
@@ -157,7 +158,7 @@ const AssignmentPage = () => {
           value={assignmentName}
           onChange={handleNameChange}
         />
-        <br/>
+        <br />
         <label htmlFor="assignmentWeightage">Weightage: </label>
         <input
           type="text"
@@ -165,7 +166,7 @@ const AssignmentPage = () => {
           value={assignmentWeightage}
           onChange={handleWeightageChange}
         />
-        <br/>
+        <br />
         <Button onClick={handleCreateAssignment}>Create</Button>
       </div>
     </div>

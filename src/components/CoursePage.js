@@ -78,9 +78,9 @@ const CoursePage = () => {
     });
   }, [students]);
 
-  const viewCourses = (course) => {
+  const viewAssignments = (course) => {
     setTimeout(() => {
-      navigate("/teacherportal/course/" + course.id + "/assignments")
+      navigate("/teacherportal/course/" + course + "/assignments")
     })
   }
 
@@ -88,7 +88,7 @@ const CoursePage = () => {
     <div className="roster-page">
       <h1 className="mb-4">{course.name}</h1>
       <div className="student-list">
-        <Button onClick={() => viewCourses(courseid)}>View Assignments</Button>
+        <Button onClick={() => viewAssignments(courseid)}>View Assignments</Button>
         <Table bordered responsive="md" style={{ textAlign: "left" }}>
           <thead className="thead-dark">
             <tr>
