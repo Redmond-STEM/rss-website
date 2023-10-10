@@ -1,0 +1,20 @@
+{
+  "routes": [
+    { "route": "/about", "serve": "/index.html", "statusCode": 200 },
+    { "route": "/counselors", "serve": "/index.html", "statusCode": 200 },
+    { "route": "/login", "serve": "/index.html", "statusCode": 200 },
+    { "route": "/adminlogin", "serve": "/index.html", "statusCode": 200 },
+    { "route": "/logout", "serve": "/index.html", "statusCode": 200 },
+    { "route": "/teacherportal/course/:courseid/assignments", "serve": "/index.html", "statusCode": 200 },
+    { "route": "/teacherportal/course/:courseid/assignments/:assignmentid", "serve": "/index.html", "statusCode": 200 },
+    { "route": "/teacherportal/course/:courseid", "serve": "/index.html", "statusCode": 200 },
+    { "route": "/parentportal/:studentid/courses", "serve": "/index.html", "statusCode": 200 },
+    { "route": "/parentportal/:studentid/courses/:courseid", "serve": "/index.html", "statusCode": 200 },
+    { "route": "/parentportal/:studentid/register", "serve": "/index.html", "statusCode": 200 },
+    { "route": "/parentportal", "serve": "/index.html", "statusCode": 200 },
+    { "route": "/parentportal/createstudent", "serve": "/index.html", "statusCode": 200 },
+    { "route": "/teacherportal", "serve": "/index.html", "statusCode": 200 },
+    { "route": "/notfound", "serve": "/index.html", "statusCode": 200 },
+    { "route": "/.*", "serve": "/index.html", "statusCode": 404 }
+  ]
+}
