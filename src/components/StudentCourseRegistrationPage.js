@@ -20,7 +20,12 @@ const StudentCourseRegistrationPage = () => {
     const [courseToRegisterIndex, setCourseToRegisterIndex] = useState(null);
 
     useEffect(() => {
-        axios.get(API_URL + 'getcourses')
+        axios.get(API_URL + 'getavailablecourses', {
+            params: {
+                studentid: studentid,
+                token: localStorage.getItem("authtoken")
+            }
+        })
             .then((res) => {
                 setCourses(res.data);
                 setLoading(false);
