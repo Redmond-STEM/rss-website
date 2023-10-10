@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import API_URL from '../Api';
 import { Table } from 'react-bootstrap';
+import Loading from './Loading';
 
 const StudentCourseAssignmentPage = () => {
 
@@ -19,6 +20,8 @@ const StudentCourseAssignmentPage = () => {
     });
 
     const [students, setStudents] = useState([]);
+
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         let authtoken = localStorage.getItem('authtoken');
@@ -79,12 +82,13 @@ const StudentCourseAssignmentPage = () => {
 
         Promise.all(updatedStudents).then((updatedStudentArray) => {
             setStudents(updatedStudentArray);
+            setLoading(false);
         });
     }, [students, assignmentid]);
 
     const handleGradeChange = (event, index) => {
         const newScore = event.target.value;
-        if (newScore === "") {   
+        if (newScore === "") {
             const updatedStudents = [...students];
             updatedStudents[index] = { ...updatedStudents[index], score: "0" };
             setStudents(updatedStudents);
@@ -103,37 +107,43 @@ const StudentCourseAssignmentPage = () => {
     };
 
     return (
-        <div className="assignment-page">
-            <h1 className="mb-4">Set Grades</h1>
-            <div className="assignment-details">
-                <h2>{assignment.name}</h2>
-                <Table bordered style={{ textAlign: "left" }}>
-                    <thead className="thead-dark">
-                        <tr>
-                            <th style={{ width: "20%" }}>First Name</th>
-                            <th style={{ width: "20%" }}>Last Name</th>
-                            <th style={{ width: "60%" }}>Grade out of {assignment.weight}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {students.map((student, index) => (
-                            <tr key={index}>
-                                <td>{student.firstname}</td>
-                                <td>{student.lastname}</td>
-                                <td>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        onChange={(event) => handleGradeChange(event, index)}
-                                        placeholder={student.score === "0" ? "0" : ""}
-                                        value={student.score === "0" ? "" : student.score}
-                                    ></input>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
-            </div>
+        <div>
+            {loading ? (
+                <Loading />
+            ) : (
+                <div className="assignment-page">
+                    <h1 className="mb-4">Set Grades</h1>
+                    <div className="assignment-details">
+                        <h2>{assignment.name}</h2>
+                        <Table bordered style={{ textAlign: "left" }}>
+                            <thead className="thead-dark">
+                                <tr>
+                                    <th style={{ width: "20%" }}>First Name</th>
+                                    <th style={{ width: "20%" }}>Last Name</th>
+                                    <th style={{ width: "60%" }}>Grade out of {assignment.weight}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {students.map((student, index) => (
+                                    <tr key={index}>
+                                        <td>{student.firstname}</td>
+                                        <td>{student.lastname}</td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                onChange={(event) => handleGradeChange(event, index)}
+                                                placeholder={student.score === "0" ? "0" : ""}
+                                                value={student.score === "0" ? "" : student.score}
+                                            ></input>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

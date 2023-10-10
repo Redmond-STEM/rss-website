@@ -3,15 +3,17 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
 import axios from "axios"
-import '../css/Table.css'; // Import the CSS file for styling
 import API_URL from '../Api';
 import { Table, Button } from 'react-bootstrap';
+import Loading from './Loading';
 
 const TeacherPortalPage = () => {
 
     const navigate = useNavigate()
 
     const [courses, setCourses] = useState([]);
+
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         let authtoken = localStorage.getItem("authtoken")
@@ -28,6 +30,7 @@ const TeacherPortalPage = () => {
             } else {
                 setCourses([])
             }
+            setLoading(false)
         }).catch((error) => {
             navigate("/notfound")
         })
@@ -40,8 +43,12 @@ const TeacherPortalPage = () => {
     }
 
     return (
-        <div className="courses-page">
-            <div className="courses-page">
+        <div>
+      {loading ? (
+        <Loading />
+      ) : (
+<div className="teacher-page">
+            <div className="teacher-page">
                 <Table bordered style={{ textAlign: "left" }}>
                     <thead>
                         <tr>
@@ -65,6 +72,8 @@ const TeacherPortalPage = () => {
                 </Table>
             </div>
         </div>
+      )}
+    </div>
     );
 };
 

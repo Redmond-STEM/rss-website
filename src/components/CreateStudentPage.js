@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { useEffect } from 'react';
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
-import '../css/Table.css'; // Import the CSS file for styling
 import { FormLabel, Button } from 'react-bootstrap';
 import API_URL from '../Api';
 

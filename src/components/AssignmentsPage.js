@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
 import axios from "axios"
-import '../css/Table.css'; // Import the CSS file for styling
 import API_URL from '../Api';
 import { Button, Table, Modal } from 'react-bootstrap';
+import Loading from './Loading';
 
 const AssignmentPage = () => {
 
@@ -16,6 +16,7 @@ const AssignmentPage = () => {
   const [assignmentWeightage, setAssignmentWeightage] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [assignmentToDeleteIndex, setAssignmentToDeleteIndex] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const { courseid } = useParams()
 
@@ -36,6 +37,7 @@ const AssignmentPage = () => {
         } else {
           setAssignments([])
         }
+        setLoading(false)
       })
       .catch((error) => {
         navigate("/notfound")
@@ -105,70 +107,76 @@ const AssignmentPage = () => {
   }
 
   return (
-    <div className="assignment-page">
-      <div className="assignment-page">
-        <Table bordered style={{ textAlign: "left" }}>
-          <thead>
-            <tr>
-              <th style={{ width: "20%" }}>Name</th>
-              <th style={{ width: "10%" }}>Weightage</th>
-            </tr>
-          </thead>
-          <tbody>
-            {assignments.map((assignment, index) => (
-              <tr key={index}>
-                <td>{assignment.name}</td>
-                <td>{assignment.weight}</td>
-                <td>
-                  <Button variant="danger" onClick={() => handleOpenDeleteModal(index)}>
-                    Delete
-                  </Button>
-                </td>
-                <td>
-                  <Button onClick={() => navigateToGrade(courseid, assignment.id)}>Set Grades</Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-        <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Confirm Deletion</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Are you sure you want to delete this assignment?
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseDeleteModal}>
-              Cancel
-            </Button>
-            <Button variant="danger" onClick={handleDeleteAssignment}>
-              Delete
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
+    <div>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="assignment-page">
+          <div className="assignment-page">
+            <Table bordered style={{ textAlign: "left" }}>
+              <thead>
+                <tr>
+                  <th style={{ width: "20%" }}>Name</th>
+                  <th style={{ width: "10%" }}>Weightage</th>
+                </tr>
+              </thead>
+              <tbody>
+                {assignments.map((assignment, index) => (
+                  <tr key={index}>
+                    <td>{assignment.name}</td>
+                    <td>{assignment.weight}</td>
+                    <td>
+                      <Button variant="danger" onClick={() => handleOpenDeleteModal(index)}>
+                        Delete
+                      </Button>
+                    </td>
+                    <td>
+                      <Button onClick={() => navigateToGrade(courseid, assignment.id)}>Set Grades</Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+            <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+              <Modal.Header closeButton>
+                <Modal.Title>Confirm Deletion</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                Are you sure you want to delete this assignment?
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                  Cancel
+                </Button>
+                <Button variant="danger" onClick={handleDeleteAssignment}>
+                  Delete
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </div>
 
-      <div className="create-assignment">
-        <h2>Create Assignment</h2>
-        <label htmlFor="assignmentName">Name: </label>
-        <input
-          type="text"
-          id="assignmentName"
-          value={assignmentName}
-          onChange={handleNameChange}
-        />
-        <br />
-        <label htmlFor="assignmentWeightage">Weightage: </label>
-        <input
-          type="text"
-          id="assignmentWeightage"
-          value={assignmentWeightage}
-          onChange={handleWeightageChange}
-        />
-        <br />
-        <Button onClick={handleCreateAssignment}>Create</Button>
-      </div>
+          <div className="create-assignment">
+            <h2>Create Assignment</h2>
+            <label htmlFor="assignmentName">Name: </label>
+            <input
+              type="text"
+              id="assignmentName"
+              value={assignmentName}
+              onChange={handleNameChange}
+            />
+            <br />
+            <label htmlFor="assignmentWeightage">Weightage: </label>
+            <input
+              type="text"
+              id="assignmentWeightage"
+              value={assignmentWeightage}
+              onChange={handleWeightageChange}
+            />
+            <br />
+            <Button onClick={handleCreateAssignment}>Create</Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

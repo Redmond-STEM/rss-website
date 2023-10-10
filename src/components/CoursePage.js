@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import axios from "axios" // Import the CSS file for styling
 import API_URL from '../Api';
+import Loading from './Loading';
 
 const CoursePage = () => {
 
@@ -19,6 +20,8 @@ const CoursePage = () => {
     "id": 0,
     "teacher": 0,
   })
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let authtoken = localStorage.getItem("authtoken")
@@ -74,6 +77,7 @@ const CoursePage = () => {
     });
 
     Promise.all(updatedStudents).then((updatedStudentArray) => {
+      setLoading(false)
       setStudents(updatedStudentArray);
     });
   }, [students]);
@@ -85,31 +89,36 @@ const CoursePage = () => {
   }
 
   return (
-    <div className="roster-page">
-      <h1 className="mb-4">{course.name}</h1>
-      <div className="student-list">
-        <Button onClick={() => viewAssignments(courseid)}>View Assignments</Button>
-        <Table bordered responsive="md" style={{ textAlign: "left" }}>
-          <thead className="thead-dark">
-            <tr>
-              <th style={{ width: "20%" }}>First Name</th>
-              <th style={{ width: "20%" }}>Last Name</th>
-              <th style={{ width: "60%" }}>Parent Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {students.map((student, index) => (
-              <tr key={index}>
-                <td>{student.firstname}</td>
-                <td>{student.lastname}</td>
-                <td>{student.parentemail}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </div>
+    <div>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="roster-page">
+          <h1 className="mb-4">{course.name}</h1>
+          <div className="student-list">
+            <Button onClick={() => viewAssignments(courseid)}>View Assignments</Button>
+            <Table bordered responsive="md" style={{ textAlign: "left" }}>
+              <thead className="thead-dark">
+                <tr>
+                  <th style={{ width: "20%" }}>First Name</th>
+                  <th style={{ width: "20%" }}>Last Name</th>
+                  <th style={{ width: "60%" }}>Parent Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                {students.map((student, index) => (
+                  <tr key={index}>
+                    <td>{student.firstname}</td>
+                    <td>{student.lastname}</td>
+                    <td>{student.parentemail}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        </div>
+      )}
     </div>
-
   );
 };
 

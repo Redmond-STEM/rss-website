@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
 import axios from "axios"
-import '../css/Table.css'; // Import the CSS file for styling
 import API_URL from '../Api';
 import { Table, Button } from 'react-bootstrap';
+import Loading from './Loading';
 
 const StudentCoursesPage = () => {
 
@@ -21,6 +21,8 @@ const StudentCoursesPage = () => {
   )
 
   const [courses, setCourses] = useState([]);
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let authtoken = localStorage.getItem("authtoken")
@@ -74,6 +76,7 @@ const StudentCoursesPage = () => {
 
     Promise.all(updatedStudents).then((updatedStudentArray) => {
       setCourses(updatedStudentArray);
+      setLoading(false);
     });
   }, [courses]);
 
@@ -84,34 +87,40 @@ const StudentCoursesPage = () => {
   }
 
   return (
-    <div className="courses-page">
-      <h1>Courses Page</h1>
-      <div className="courses-page">
-        <h2>Courses for {student.firstname} {student.lastname}</h2>
-        <Table bordered style={{ textAlign: "left" }}>
-          <thead>
-            <tr>
-              <th style={{ width: "15%" }}>Course Name</th>
-              <th style={{ width: "15%" }}>Start Date</th>
-              <th style={{ width: "15%" }}>End Date</th>
-              <th style={{ width: "15%" }}>Time</th>
-              <th style={{ width: "15%" }}>Teacher Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {courses.map((course, index) => (
-              <tr key={index}>
-                <td>{course.name}</td>
-                <td>{new Date(course.startdate).toDateString()}</td>
-                <td>{new Date(course.enddate).toDateString()}</td>
-                <td>{new Date(course.startdate).toLocaleTimeString() + " to " + new Date(course.enddate).toLocaleTimeString()}</td>
-                <td>{course.teacheremail}</td>
-                <td><Button onClick={() => navigateToGrades(studentid, course.id)}>View Grades</Button></td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </div>
+    <div>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="courses-page">
+          <h1>Courses Page</h1>
+          <div className="courses-page">
+            <h2>Courses for {student.firstname} {student.lastname}</h2>
+            <Table bordered style={{ textAlign: "left" }}>
+              <thead>
+                <tr>
+                  <th style={{ width: "15%" }}>Course Name</th>
+                  <th style={{ width: "15%" }}>Start Date</th>
+                  <th style={{ width: "15%" }}>End Date</th>
+                  <th style={{ width: "15%" }}>Time</th>
+                  <th style={{ width: "15%" }}>Teacher Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                {courses.map((course, index) => (
+                  <tr key={index}>
+                    <td>{course.name}</td>
+                    <td>{new Date(course.startdate).toDateString()}</td>
+                    <td>{new Date(course.enddate).toDateString()}</td>
+                    <td>{new Date(course.startdate).toLocaleTimeString() + " to " + new Date(course.enddate).toLocaleTimeString()}</td>
+                    <td>{course.teacheremail}</td>
+                    <td><Button onClick={() => navigateToGrades(studentid, course.id)}>View Grades</Button></td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
