@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import axios from 'axios';
 import API_URL from '../Api';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Modal } from 'react-bootstrap';
 import Loading from './Loading';
 
 const StudentCourseRegistrationPage = () => {
@@ -16,6 +16,9 @@ const StudentCourseRegistrationPage = () => {
 
     const [loading, setLoading] = useState(true);
 
+    const [showRegisterModal, setShowRegisterModal] = useState(false);
+    const [courseToRegisterIndex, setCourseToRegisterIndex] = useState(null);
+
     useEffect(() => {
         axios.get(API_URL + 'getcourses')
             .then((res) => {
@@ -27,7 +30,8 @@ const StudentCourseRegistrationPage = () => {
             })
     }, [studentid, navigate]);
 
-    const handleRegistration = (courseid, studentid) => {
+    const handleRegistration = () => {
+        const courseid = courses[courseToRegisterIndex].id
         const params = {
             token: localStorage.getItem("authtoken"),
             studentid: studentid,
@@ -43,7 +47,18 @@ const StudentCourseRegistrationPage = () => {
             .catch((error) => {
                 navigate("/notfound")
             })
+        handleCloseRegisterModal()
     }
+
+    const handleOpenRegisterModal = (index) => {
+        setCourseToRegisterIndex(index);
+        setShowRegisterModal(true);
+    };
+
+    const handleCloseRegisterModal = () => {
+        setShowRegisterModal(false);
+        setCourseToRegisterIndex(null);
+    };
 
     return (
         <div>
@@ -69,11 +84,27 @@ const StudentCourseRegistrationPage = () => {
                                         <td>{new Date(course.startdate).toDateString()}</td>
                                         <td>{new Date(course.enddate).toDateString()}</td>
                                         <td>{new Date(course.startdate).toLocaleTimeString() + " to " + new Date(course.enddate).toLocaleTimeString()}</td>
-                                        <td><Button onClick={() => handleRegistration(course.id, studentid)}>Register</Button></td>
+                                        <td><Button onClick={() => handleOpenRegisterModal(index)}>Register</Button></td>
                                     </tr>
                                 ))}
                             </tbody>
                         </Table>
+                        <Modal show={showRegisterModal} onHide={handleCloseRegisterModal}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Confirm Registration</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                Are you sure you want to register for {courses[courseToRegisterIndex]?.name || 'null'}
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleCloseRegisterModal}>
+                                    Cancel
+                                </Button>
+                                <Button onClick={handleRegistration}>
+                                    Register
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                     </div>
                 </div>
             )}
