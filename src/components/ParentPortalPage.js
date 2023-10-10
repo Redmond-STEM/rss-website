@@ -33,7 +33,7 @@ const ParentPortalPage = () => {
       })
       .catch((error) => {
         if (error.response.status === 404) {
-          navigate("/notfound")
+          navigate("/#/notfound")
         }
       })
   }, [courseid, navigate])
@@ -56,12 +56,12 @@ const ParentPortalPage = () => {
                 <td>{student.firstname}</td>
                 <td>{student.lastname}</td>
                 <td>
-                  <Button href={"/parentportal/" + student.id + "/courses"}>
+                  <Button href={"/#/parentportal/" + student.id + "/courses"}>
                     View Courses
                   </Button>
                 </td>
                 <td>
-                  <Button href={"/parentportal/" + student.id + "/register"}>
+                  <Button href={"/#/parentportal/" + student.id + "/register"}>
                     Register
                   </Button>
                 </td>

@@ -37,7 +37,7 @@ const AssignmentPage = () => {
           }
       })
       .catch((error) => {
-        navigate("/notfound")
+        navigate("/#/notfound")
       })
   }, [courseid, navigate])
 
@@ -118,7 +118,7 @@ const AssignmentPage = () => {
                   </Button>
                 </td>
                 <td>
-                  <Button href={"/teacherportal/course/"+ assignment.course + "/assignments/" + assignment.id}>Set Grades</Button>
+                  <Button href={"/#/teacherportal/course/"+ assignment.course + "/assignments/" + assignment.id}>Set Grades</Button>
                 </td>
               </tr>
             ))}

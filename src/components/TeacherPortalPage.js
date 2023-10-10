@@ -29,7 +29,7 @@ const TeacherPortalPage = () => {
                 setCourses([])
             }
         }).catch((error) => {
-            navigate("/notfound")
+            navigate("/#/notfound")
         })
     }, [navigate])
 
@@ -52,7 +52,7 @@ const TeacherPortalPage = () => {
                                 <td>{new Date(course.startdate).toDateString()}</td>
                                 <td>{new Date(course.enddate).toDateString()}</td>
                                 <td>{new Date(course.startdate).toLocaleTimeString() + " to " + new Date(course.enddate).toLocaleTimeString()}</td>
-                                <td><Button href={"/teacherportal/course/" + course.id}>View Course</Button></td>
+                                <td><Button href={"/#/teacherportal/course/" + course.id}>View Course</Button></td>
                             </tr>
                         ))}
                     </tbody>

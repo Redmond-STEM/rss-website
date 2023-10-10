@@ -62,7 +62,7 @@ const CreateStudentPage = () => {
       setStudentFirstName('');
       setStudentLastName('');
     }).then(() => {
-      navigate("/parentportal")
+      navigate("/#/parentportal")
     })
   };
 

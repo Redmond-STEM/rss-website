@@ -37,7 +37,7 @@ const StudentCoursesPage = () => {
         setStudent(res.data)
       })
       .catch((error) => {
-        navigate("/notfound")
+        navigate("/#/notfound")
       });
     axios.get(API_URL + "getstudentcourses", {
       params: {
@@ -100,7 +100,7 @@ const StudentCoursesPage = () => {
                 <td>{new Date(course.enddate).toDateString()}</td>
                 <td>{new Date(course.startdate).toLocaleTimeString() + " to " + new Date(course.enddate).toLocaleTimeString()}</td>
                 <td>{course.teacheremail}</td>
-                <td><Button href={"/parentportal/" + studentid + "/courses/" + course.id}>View Grades</Button></td>
+                <td><Button href={"/#/parentportal/" + studentid + "/courses/" + course.id}>View Grades</Button></td>
               </tr>
             ))}
           </tbody>

@@ -1,5 +1,5 @@
 import './App.css';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import AboutPage from './components/AboutPage';
 import CounselorsPage from './components/CounselorsPage';
@@ -61,10 +61,10 @@ function App() {
             <Navbar.Brand href="/"><img alt="Redmond STEM" src={logo} width="40" height="40" /></Navbar.Brand>
             <Navbar.Brand href="/">Redmond STEM</Navbar.Brand>
             <Nav className="me-auto">
-              <Nav.Link href="/parentportal">Parent Portal</Nav.Link>
-              <Nav.Link href="/teacherportal">Teacher Portal</Nav.Link>
+              <Nav.Link href="/#/parentportal">Parent Portal</Nav.Link>
+              <Nav.Link href="/#/teacherportal">Teacher Portal</Nav.Link>
               <NavDropdown title="About Us">
-                <NavDropdown.Item href="/counselors">Conunselors</NavDropdown.Item>
+                <NavDropdown.Item href="/#/counselors">Conunselors</NavDropdown.Item>
                 <NavDropdown.Item>Mission Statement</NavDropdown.Item>
                 <NavDropdown.Item>Contact Us</NavDropdown.Item>
               </NavDropdown>
@@ -78,7 +78,7 @@ function App() {
           </Container>
         </Navbar>
         <br />
-        <Router>
+        <HashRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
@@ -97,7 +97,7 @@ function App() {
             <Route path="/teacherportal" element={<TeacherPortalPage />} />
             <Route path="/notfound" element={<NotFoundPage />} />
           </Routes>
-        </Router>
+        </HashRouter>
       </GoogleOAuthProvider>
     </div>
   );
