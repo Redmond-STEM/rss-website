@@ -3,7 +3,6 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import AboutPage from './components/AboutPage';
 import CounselorsPage from './components/CounselorsPage';
-import LoginPage from './components/LoginPage';
 import AdminLoginPage from './components/AdminLoginPage';
 import LogoutPage from './components/LogoutPage';
 import AssignmentsPage from './components/AssignmentsPage';
@@ -14,6 +13,7 @@ import ParentPortal from './components/ParentPortalPage';
 import CreateStudentPage from './components/CreateStudentPage';
 import TeacherPortalPage from './components/TeacherPortalPage';
 import StudentCourseGradePage from './components/StudentCourseGradePage';
+import LoginButton from './components/LoginButton';
 import API_URL from './Api';
 import logo from "./logo.jpeg"
 import profile from "./profile.png"
@@ -71,7 +71,7 @@ function App() {
             </Nav>
             <NavDropdown title={<img src={profile} alt="Profile" className="profile-picture" width="40" height="40" />} id="account-dropdown" color="white">
               <NavDropdown.Item>Hi {account.username}</NavDropdown.Item>
-              <NavDropdown.Item href="/#/login">Login</NavDropdown.Item>
+              <LoginButton/>
               <NavDropdown.Item href="/#/logout">Logout</NavDropdown.Item>
               <NavDropdown.Item href="/#/adminlogin">Admin Login</NavDropdown.Item>
             </NavDropdown>
@@ -83,7 +83,6 @@ function App() {
             <Route path="/" exact element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/counselors" element={<CounselorsPage />} />
-            <Route path="/login" element={<LoginPage />} />
             <Route path="/adminlogin" element={<AdminLoginPage />} />
             <Route path="/logout" element={<LogoutPage />} />
             <Route path="/teacherportal/course/:courseid/assignments" element={<AssignmentsPage />} />
