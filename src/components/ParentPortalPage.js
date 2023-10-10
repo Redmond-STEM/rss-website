@@ -38,6 +38,18 @@ const ParentPortalPage = () => {
       })
   }, [courseid, navigate])
 
+  const navigateToCourses = (studentid) => {
+    setTimeout(() => {
+      navigate("/parentportal/" + studentid + "/courses")
+    }) 
+  }
+
+  const navigateToRegister = (studentid) => {
+    setTimeout(() => {
+      navigate("/parentportal/" + studentid + "/register")
+    }) 
+  }
+
   return (
     <div className="student-page">
       <div className="student-page">
@@ -56,12 +68,12 @@ const ParentPortalPage = () => {
                 <td>{student.firstname}</td>
                 <td>{student.lastname}</td>
                 <td>
-                  <Button href={"/#/parentportal/" + student.id + "/courses"}>
+                  <Button onClick={() => navigateToCourses(student.id)}>
                     View Courses
                   </Button>
                 </td>
                 <td>
-                  <Button href={"/#/parentportal/" + student.id + "/register"}>
+                  <Button onClick={() => navigateToRegister(student.id)}>
                     Register
                   </Button>
                 </td>

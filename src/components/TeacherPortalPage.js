@@ -33,6 +33,12 @@ const TeacherPortalPage = () => {
         })
     }, [navigate])
 
+    const viewCourse = (courseid) => {
+        setTimeout(() => {
+            navigate("/teacherportal/course/" + courseid)
+        })
+    }
+
     return (
         <div className="courses-page">
             <div className="courses-page">
@@ -52,7 +58,7 @@ const TeacherPortalPage = () => {
                                 <td>{new Date(course.startdate).toDateString()}</td>
                                 <td>{new Date(course.enddate).toDateString()}</td>
                                 <td>{new Date(course.startdate).toLocaleTimeString() + " to " + new Date(course.enddate).toLocaleTimeString()}</td>
-                                <td><Button href={"/#/teacherportal/course/" + course.id}>View Course</Button></td>
+                                <td><Button onClick={() => viewCourse(course.id)}>View Course</Button></td>
                             </tr>
                         ))}
                     </tbody>

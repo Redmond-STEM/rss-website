@@ -97,6 +97,12 @@ const AssignmentPage = () => {
     handleCloseDeleteModal()
   };
 
+  const navigateToGrade = (course, assignment) => {
+    setTimeout(() => {
+      navigate("/teacherportal/course/" + course + "/assignments/" + assignment)
+    })
+  }
+
   return (
     <div className="assignment-page">
       <div className="assignment-page">
@@ -118,7 +124,7 @@ const AssignmentPage = () => {
                   </Button>
                 </td>
                 <td>
-                  <Button href={"/#/teacherportal/course/"+ assignment.course + "/assignments/" + assignment.id}>Set Grades</Button>
+                  <Button onClick={() => navigateToGrade(courseid, assignment.id)}>Set Grades</Button>
                 </td>
               </tr>
             ))}

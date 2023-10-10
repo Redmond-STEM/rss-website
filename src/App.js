@@ -7,7 +7,7 @@ import LoginPage from './components/LoginPage';
 import AdminLoginPage from './components/AdminLoginPage';
 import LogoutPage from './components/LogoutPage';
 import AssignmentsPage from './components/AssignmentsPage';
-import RosterPage from './components/RosterPage';
+import CoursePage from './components/CoursePage';
 import StudentCourseAssignmentPage from "./components/StudentCourseAssignmentPage";
 import StudentCoursesPage from './components/StudentCoursesPage';
 import ParentPortal from './components/ParentPortalPage';
@@ -80,7 +80,7 @@ function App() {
         <br />
         <HashRouter>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" exact element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/counselors" element={<CounselorsPage />} />
             <Route path="/login" element={<LoginPage />} />
@@ -88,7 +88,7 @@ function App() {
             <Route path="/logout" element={<LogoutPage />} />
             <Route path="/teacherportal/course/:courseid/assignments" element={<AssignmentsPage />} />
             <Route path="/teacherportal/course/:courseid/assignments/:assignmentid" element={<StudentCourseAssignmentPage />} />
-            <Route path="/teacherportal/course/:courseid" element={<RosterPage />} />
+            <Route path="/teacherportal/course/:courseid" element={<CoursePage />} />
             <Route path="/parentportal/:studentid/courses" element={<StudentCoursesPage />} />
             <Route path="/parentportal/:studentid/courses/:courseid" element={<StudentCourseGradePage />} />
             <Route path="/parentportal/:studentid/register" element={<StudentCourseRegistrationPage />} />
@@ -96,6 +96,7 @@ function App() {
             <Route path="/parentportal/createstudent" element={<CreateStudentPage />} />
             <Route path="/teacherportal" element={<TeacherPortalPage />} />
             <Route path="/notfound" element={<NotFoundPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </HashRouter>
       </GoogleOAuthProvider>

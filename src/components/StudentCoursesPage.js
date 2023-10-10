@@ -77,6 +77,12 @@ const StudentCoursesPage = () => {
     });
   }, [courses]);
 
+  const navigateToGrades = (studentid, courseid) => {
+    setTimeout(() => {
+      navigate("/parentportal/" + studentid + "/courses/" + courseid)
+    })
+  }
+
   return (
     <div className="courses-page">
       <h1>Courses Page</h1>
@@ -100,7 +106,7 @@ const StudentCoursesPage = () => {
                 <td>{new Date(course.enddate).toDateString()}</td>
                 <td>{new Date(course.startdate).toLocaleTimeString() + " to " + new Date(course.enddate).toLocaleTimeString()}</td>
                 <td>{course.teacheremail}</td>
-                <td><Button href={"/#/parentportal/" + studentid + "/courses/" + course.id}>View Grades</Button></td>
+                <td><Button onClick={() => navigateToGrades(studentid, course.id)}>View Grades</Button></td>
               </tr>
             ))}
           </tbody>

@@ -6,7 +6,7 @@ import { Table, Button } from 'react-bootstrap';
 import axios from "axios" // Import the CSS file for styling
 import API_URL from '../Api';
 
-const RosterPage = () => {
+const CoursePage = () => {
 
   const navigate = useNavigate()
 
@@ -78,11 +78,17 @@ const RosterPage = () => {
     });
   }, [students]);
 
+  const viewCourses = (course) => {
+    setTimeout(() => {
+      navigate("/teacherportal/course/" + course.id + "/assignments")
+    })
+  }
+
   return (
     <div className="roster-page">
       <h1 className="mb-4">{course.name}</h1>
       <div className="student-list">
-        <Button href={"/#/teacherportal/course/" + courseid + "/assignments"}>View Assignments</Button>
+        <Button onClick={() => viewCourses(courseid)}>View Assignments</Button>
         <Table bordered responsive="md" style={{ textAlign: "left" }}>
           <thead className="thead-dark">
             <tr>
@@ -107,4 +113,4 @@ const RosterPage = () => {
   );
 };
 
-export default RosterPage;
+export default CoursePage;
