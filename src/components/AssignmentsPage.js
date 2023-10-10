@@ -118,7 +118,7 @@ const AssignmentPage = () => {
                   </Button>
                 </td>
                 <td>
-                  <Button href={"/#/teacherportal/course/"+ assignment.course + "/assignments/" + assignment.id}>Set Grades</Button>
+                  <Button href={"/teacherportal/course/%23"+ assignment.course + "/assignments/%23" + assignment.id}>Set Grades</Button>
                 </td>
               </tr>
             ))}

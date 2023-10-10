@@ -56,12 +56,12 @@ const ParentPortalPage = () => {
                 <td>{student.firstname}</td>
                 <td>{student.lastname}</td>
                 <td>
-                  <Button href={"/#/parentportal/" + student.id + "/courses"}>
+                  <Button href={"/#/parentportal/%23" + student.id + "/courses"}>
                     View Courses
                   </Button>
                 </td>
                 <td>
-                  <Button href={"/#/parentportal/" + student.id + "/register"}>
+                  <Button href={"/#/parentportal/%23" + student.id + "/register"}>
                     Register
                   </Button>
                 </td>
