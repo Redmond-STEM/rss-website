@@ -82,7 +82,7 @@ const RosterPage = () => {
     <div className="roster-page">
       <h1 className="mb-4">{course.name}</h1>
       <div className="student-list">
-        <Button href={"/#/teacherportal/course/%23" + courseid + "/assignments"}>View Assignments</Button>
+        <Button href={"/#/teacherportal/course/" + courseid + "/assignments"}>View Assignments</Button>
         <Table bordered responsive="md" style={{ textAlign: "left" }}>
           <thead className="thead-dark">
             <tr>

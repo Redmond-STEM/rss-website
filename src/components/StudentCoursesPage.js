@@ -100,7 +100,7 @@ const StudentCoursesPage = () => {
                 <td>{new Date(course.enddate).toDateString()}</td>
                 <td>{new Date(course.startdate).toLocaleTimeString() + " to " + new Date(course.enddate).toLocaleTimeString()}</td>
                 <td>{course.teacheremail}</td>
-                <td><Button href={"/#/parentportal/%23" + studentid + "/courses/%23" + course.id}>View Grades</Button></td>
+                <td><Button href={"/#/parentportal/" + studentid + "/courses/" + course.id}>View Grades</Button></td>
               </tr>
             ))}
           </tbody>
