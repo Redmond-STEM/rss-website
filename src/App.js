@@ -28,8 +28,6 @@ const client_id = process.env.REACT_APP_GOOGLE_OAUTH || process.env.APPSETTING_R
 
 function App() {
 
-  console.log(process.env)
-
   const [account, setAccount] = useState(
     {
       "username": "Not Logged In",
