@@ -24,7 +24,7 @@ import { useEffect, useState } from 'react';
 import axios from "axios";
 import NotFoundPage from './components/NotFoundPage';
 import StudentCourseRegistrationPage from './components/StudentCourseRegistrationPage';
-const client_id = process.env.REACT_APP_GOOGLE_OAUTH;
+const client_id = process.env.REACT_APP_GOOGLE_OAUTH || process.env.APPSETTING_REACT_APP_GOOGLE_OAUTH;
 
 function App() {
 
