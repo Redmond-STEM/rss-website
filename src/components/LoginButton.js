@@ -8,7 +8,6 @@ const LoginButton = () => {
 
   const login = useGoogleLogin({
     onSuccess: res => {
-      console.log("SUCCESS")
       axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
         headers: { Authorization: `Bearer ${res.access_token}` },
       })
