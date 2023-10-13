@@ -40,6 +40,10 @@ function App() {
     }
   )
 
+  window.addEventListener('storage', () => {
+    setAuthToken(localStorage.getItem("authtoken"))
+  })
+  
   useEffect(() => {
     axios.get(API_URL + "getaccount", {
       params: {
