@@ -28,6 +28,8 @@ const client_id = process.env.REACT_APP_GOOGLE_OAUTH || process.env.APPSETTING_R
 
 function App() {
 
+  const [authtoken, setAuthToken] = useState(localStorage.getItem("authtoken"))
+  
   const [account, setAccount] = useState(
     {
       "username": "Not Logged In",
@@ -39,7 +41,6 @@ function App() {
   )
 
   useEffect(() => {
-    let authtoken = localStorage.getItem("authtoken")
     axios.get(API_URL + "getaccount", {
       params: {
         token: authtoken, // Add your parameters here
@@ -51,7 +52,7 @@ function App() {
       .catch((error) => {
         console.error("Error:", error);
       });
-  }, [localStorage.getItem("authtoken")])
+  }, [authtoken])
 
   return (
     <div className="App">
