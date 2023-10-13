@@ -77,9 +77,9 @@ const CoursePage = () => {
     });
 
     Promise.all(updatedStudents).then((updatedStudentArray) => {
-      setLoading(false)
       setStudents(updatedStudentArray);
     });
+    setLoading(false)
   }, [students]);
 
   const viewAssignments = (course) => {

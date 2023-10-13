@@ -76,8 +76,8 @@ const StudentCoursesPage = () => {
 
     Promise.all(updatedStudents).then((updatedStudentArray) => {
       setCourses(updatedStudentArray);
-      setLoading(false);
     });
+    setLoading(false);
   }, [courses]);
 
   const navigateToGrades = (studentid, courseid) => {
