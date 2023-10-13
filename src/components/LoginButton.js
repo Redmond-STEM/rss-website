@@ -4,7 +4,7 @@ import token from 'random-web-token';
 import API_URL from '../Api';
 import { NavDropdown } from "react-bootstrap";
 
-const LoginButton = () => {
+const LoginButton = ( {setToken} ) => {
 
   const login = useGoogleLogin({
     onSuccess: res => {
@@ -20,13 +20,16 @@ const LoginButton = () => {
           "type": "google",
           "token": authtoken
         }
-        axios.post(API_URL + "loginaccount", account).then((response) => { if (response.status === 201) localStorage.setItem("authtoken", authtoken) })
+        axios.post(API_URL + "loginaccount", account).then((response) => { if (response.status === 201) {
+          localStorage.setItem("authtoken", authtoken)
+          setToken(authtoken)
+        }})
       }) 
     }
   })
 
   return (
-    <NavDropdown.Item onClick={() => login()}>Login</NavDropdown.Item>
+    <NavDropdown.Item onClick={login}>Login</NavDropdown.Item>
   )
 
 }

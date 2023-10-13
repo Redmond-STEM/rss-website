@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import API_URL from '../Api';
 
-const AdminLoginPage = () => {
+const AdminLoginPage = ({ setToken }) => {
 
   const navigate = useNavigate();
 
@@ -30,6 +30,7 @@ const AdminLoginPage = () => {
     axios.post(API_URL + "loginaccount", account).then((res) => {
       if (res.status === 201) { 
         localStorage.setItem("authtoken", authtoken) 
+        setToken(authtoken)
       } 
       navigate("/teacherportal") 
     })

@@ -29,7 +29,7 @@ const client_id = process.env.REACT_APP_GOOGLE_OAUTH || process.env.APPSETTING_R
 function App() {
 
   const [authtoken, setAuthToken] = useState(localStorage.getItem("authtoken"))
-  
+
   const [account, setAccount] = useState(
     {
       "username": "Not Logged In",
@@ -40,10 +40,6 @@ function App() {
     }
   )
 
-  window.addEventListener('storage', () => {
-    setAuthToken(localStorage.getItem("authtoken"))
-  })
-  
   useEffect(() => {
     axios.get(API_URL + "getaccount", {
       params: {
@@ -55,7 +51,15 @@ function App() {
       })
       .catch((error) => {
         console.error("Error:", error);
+        setAccount({
+          "username": "Not Logged In",
+          "email": "default email",
+          "create_time": "yes",
+          "id": 0,
+          "auth_type": "google"
+        })
       });
+    console.log(authtoken)
   }, [authtoken])
 
   return (
@@ -76,7 +80,7 @@ function App() {
             </Nav>
             <NavDropdown title={<img src={profile} alt="Profile" className="profile-picture" width="40" height="40" />} id="account-dropdown" color="white">
               <NavDropdown.Item>Hi {account.username}</NavDropdown.Item>
-              <LoginButton/>
+              <LoginButton setToken={setAuthToken} />
               <NavDropdown.Item href="/#/logout">Logout</NavDropdown.Item>
               <NavDropdown.Item href="/#/adminlogin">Admin Login</NavDropdown.Item>
             </NavDropdown>
@@ -88,8 +92,8 @@ function App() {
             <Route path="/" exact element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/counselors" element={<CounselorsPage />} />
-            <Route path="/adminlogin" element={<AdminLoginPage />} />
-            <Route path="/logout" element={<LogoutPage />} />
+            <Route path="/adminlogin" element={<AdminLoginPage setToken={setAuthToken} />} />
+            <Route path="/logout" element={<LogoutPage setToken={setAuthToken} />} />
             <Route path="/teacherportal/course/:courseid/assignments" element={<AssignmentsPage />} />
             <Route path="/teacherportal/course/:courseid/assignments/:assignmentid" element={<StudentCourseAssignmentPage />} />
             <Route path="/teacherportal/course/:courseid" element={<CoursePage />} />
