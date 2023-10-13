@@ -51,7 +51,7 @@ function App() {
       .catch((error) => {
         console.error("Error:", error);
       });
-  }, [])
+  }, [localStorage.getItem("authtoken")])
 
   return (
     <div className="App">
