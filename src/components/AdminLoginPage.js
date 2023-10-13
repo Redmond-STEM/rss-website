@@ -23,6 +23,7 @@ const AdminLoginPage = () => {
     let authtoken = token.genSync("extra", 50)
     let account = {
       "email": email,
+      "password": password,
       "type": "teacher",
       "token": authtoken
     }
