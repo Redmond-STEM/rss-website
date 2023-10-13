@@ -15,7 +15,7 @@ import TeacherPortalPage from './components/TeacherPortalPage';
 import StudentCourseGradePage from './components/StudentCourseGradePage';
 import LoginButton from './components/LoginButton';
 import API_URL from './Api';
-import logo from "./logo.jpeg"
+import logo from "./logo.png"
 import profile from "./profile.png"
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
