@@ -3,63 +3,46 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from 'react';
 import axios from "axios"
-import '../css/Table.css'; // Import the CSS file for styling
 import API_URL from '../Api';
 import { Button, Table, Modal } from 'react-bootstrap';
+import Loading from './Loading';
 
 const AssignmentPage = () => {
 
   const navigate = useNavigate()
-
-  const { courseid } = useParams()
-
-  const [account, setAccount] = useState(
-      {
-          "username": "default user",
-          "email": "default email",
-          "create_time": "yes",
-          "id": 0,
-          "auth_type": "google"
-      }
-  )
 
   const [assignments, setAssignments] = useState([]);
   const [assignmentName, setAssignmentName] = useState('');
   const [assignmentWeightage, setAssignmentWeightage] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [assignmentToDeleteIndex, setAssignmentToDeleteIndex] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const { courseid } = useParams()
 
   useEffect(() => {
-      let authtoken = localStorage.getItem("authtoken")
+    let authtoken = localStorage.getItem("authtoken")
 
-      setAssignments([]);
+    setAssignments([]);
 
-      axios.get(API_URL + "getaccount", {
-          params: {
-              token: authtoken, // Add your parameters here
-          }})
+    axios.get(API_URL + "getassignmentrefs", {
+      params: {
+        token: authtoken,
+        id: courseid
+      }
+    })
       .then((res) => {
-          setAccount(res.data)
-      })
-      .catch((error) => {
-        navigate("/notfound")
-      });
-      axios.get(API_URL + "getassignmentrefs", {
-          params: {
-              token: authtoken,
-              id: courseid
-          }})
-      .then((res) => { 
-          if (res.data != null) {
-            setAssignments(res.data)
-          } else {
-            setAssignments([])
-          }
+        if (res.data != null) {
+          setAssignments(res.data)
+        } else {
+          setAssignments([])
+        }
+        setLoading(false)
       })
       .catch((error) => {
         navigate("/notfound")
       })
-  }, [courseid])
+  }, [courseid, navigate])
 
   const handleNameChange = (e) => {
     setAssignmentName(e.target.value);
@@ -70,8 +53,6 @@ const AssignmentPage = () => {
   };
 
   const handleCreateAssignment = () => {
-    console.log(assignmentName, parseInt(assignmentWeightage))
-
     const params = {
       token: localStorage.getItem("authtoken"),
       assignment: {
@@ -81,17 +62,17 @@ const AssignmentPage = () => {
       }
     }
 
-    axios.post(API_URL + "createassignment", params).then((res) => { 
+    axios.post(API_URL + "createassignment", params).then((res) => {
       const newAssignment = {
         name: assignmentName,
         weight: assignmentWeightage,
         id: res.data.assignmentId.insertId
       };
-  
+
       setAssignments([...assignments, newAssignment]);
       setAssignmentName('');
       setAssignmentWeightage('');
-     })
+    })
   };
 
   const handleOpenDeleteModal = (index) => {
@@ -102,86 +83,100 @@ const AssignmentPage = () => {
   const handleCloseDeleteModal = () => {
     setShowDeleteModal(false);
     setAssignmentToDeleteIndex(null);
-  };  
+  };
 
-  const handleDeleteAssignment = (index) => {
+  const handleDeleteAssignment = () => {
     const updatedAssignments = [...assignments];
-    const id = updatedAssignments[index].id
+    const id = updatedAssignments[assignmentToDeleteIndex].id
     console.log(id)
     const params = {
       token: localStorage.getItem("authtoken"),
       id: parseInt(id)
     }
-    axios.post(API_URL + "deleteassignment", params).then((res) => { 
-      updatedAssignments.splice(index, 1);
+    axios.post(API_URL + "deleteassignment", params).then((res) => {
+      updatedAssignments.splice(assignmentToDeleteIndex, 1);
       setAssignments(updatedAssignments);
     })
+    handleCloseDeleteModal()
   };
 
-  return (
-    <div className="assignment-page">
-      <h1>Assignment Page</h1>
-      <div className="assignment-page">
-        <h2>Assignments</h2>
-        <Table bordered style={ {textAlign: "left"} }>
-          <thead>
-            <tr>
-              <th style={ {width: "20%"} }>Name</th>
-              <th style={ {width: "80%"} }>Weightage</th>
-            </tr>
-          </thead>
-          <tbody>
-            {assignments.map((assignment, index) => (
-              <tr key={index}>
-                <td>{assignment.name}</td>
-                <td>{assignment.weight}</td>
-                <td>
-                  <Button  variant="danger" onClick={() => handleOpenDeleteModal(index)}>
-                    Delete
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-        <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Confirm Deletion</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Are you sure you want to delete this assignment?
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleCloseDeleteModal}>
-              Cancel
-            </Button>
-            <Button variant="danger" onClick={handleDeleteAssignment(assignmentToDeleteIndex)}>
-              Delete
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
+  const navigateToGrade = (course, assignment) => {
+    setTimeout(() => {
+      navigate("/teacherportal/course/" + course + "/assignments/" + assignment)
+    })
+  }
 
-      <div className="create-assignment">
-        <h2>Create Assignment</h2>
-        <label htmlFor="assignmentName">Name: </label>
-        <input
-          type="text"
-          id="assignmentName"
-          value={assignmentName}
-          onChange={handleNameChange}
-        />
-        <br/>
-        <label htmlFor="assignmentWeightage">Weightage: </label>
-        <input
-          type="text"
-          id="assignmentWeightage"
-          value={assignmentWeightage}
-          onChange={handleWeightageChange}
-        />
-        <br/>
-        <Button onClick={handleCreateAssignment}>Create</Button>
-      </div>
+  return (
+    <div>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="assignment-page">
+          <div className="assignment-page">
+            <Table bordered style={{ textAlign: "left" }}>
+              <thead>
+                <tr>
+                  <th style={{ width: "20%" }}>Name</th>
+                  <th style={{ width: "10%" }}>Weightage</th>
+                </tr>
+              </thead>
+              <tbody>
+                {assignments.map((assignment, index) => (
+                  <tr key={index}>
+                    <td>{assignment.name}</td>
+                    <td>{assignment.weight}</td>
+                    <td>
+                      <Button variant="danger" onClick={() => handleOpenDeleteModal(index)}>
+                        Delete
+                      </Button>
+                    </td>
+                    <td>
+                      <Button onClick={() => navigateToGrade(courseid, assignment.id)}>Set Grades</Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+            <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+              <Modal.Header closeButton>
+                <Modal.Title>Confirm Deletion</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                Are you sure you want to delete this assignment?
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                  Cancel
+                </Button>
+                <Button variant="danger" onClick={handleDeleteAssignment}>
+                  Delete
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </div>
+
+          <div className="create-assignment">
+            <h2>Create Assignment</h2>
+            <label htmlFor="assignmentName">Name: </label>
+            <input
+              type="text"
+              id="assignmentName"
+              value={assignmentName}
+              onChange={handleNameChange}
+            />
+            <br />
+            <label htmlFor="assignmentWeightage">Weightage: </label>
+            <input
+              type="text"
+              id="assignmentWeightage"
+              value={assignmentWeightage}
+              onChange={handleWeightageChange}
+            />
+            <br />
+            <Button onClick={handleCreateAssignment}>Create</Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
