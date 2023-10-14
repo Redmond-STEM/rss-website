@@ -5,10 +5,6 @@ const HomePage = () => {
 
   return (
     <div>
-<<<<<<< Updated upstream
-      <h1>Home Page</h1>
-      <p>This is the home page!</p>
-=======
       <Header/>
       <IntroParagraphs/>
       <div id="inspirational_quote" >
@@ -32,10 +28,9 @@ const HomePage = () => {
         </div>
 
       </div>
->>>>>>> Stashed changes
     </div>
-  );
-
+  )
+  
 }
 
 export default HomePage;

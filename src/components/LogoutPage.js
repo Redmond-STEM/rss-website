@@ -4,7 +4,7 @@ import { Modal, Button } from "react-bootstrap"
 import axios from "axios"
 import API_URL from "../Api"
 
-const LogoutPage = () => {
+const LogoutPage = ({ setToken }) => {
 
     let navigate = useNavigate()
 
@@ -19,6 +19,7 @@ const LogoutPage = () => {
             token: localStorage.getItem("authtoken")
         })
         localStorage.removeItem("authtoken")
+        setToken("")
         googleLogout()
         navigate("/")
     }
