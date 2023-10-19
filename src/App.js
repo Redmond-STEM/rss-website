@@ -20,6 +20,7 @@ import profile from "./profile.png"
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Helmet } from "react-helmet";
 import { useEffect, useState } from 'react';
 import axios from "axios";
 import NotFoundPage from './components/NotFoundPage';
@@ -65,6 +66,11 @@ function App() {
   return (
     <div className="App">
       <GoogleOAuthProvider clientId={client_id}>
+      <Helmet>
+            <meta charSet="utf-8" />
+            <title>Redmond STEM</title>
+            <meta name="description" content="Redmond STEM"/>
+        </Helmet>
         <Navbar bg="dark" data-bs-theme="dark">
           <Container>
             <Navbar.Brand href="/"><img alt="Redmond STEM" src={logo} width="40" height="40" /></Navbar.Brand>
