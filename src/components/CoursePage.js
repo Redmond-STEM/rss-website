@@ -62,25 +62,24 @@ const CoursePage = () => {
 
   useEffect(() => {
     if (students[0]?.parentemail) return;
-    const updatedStudents = students.map(async (student) => {
+    const studentsPromise = Promise.all(students.map(async (student) => {
       const response = await axios.get(API_URL + "getaccount", {
         params: {
           id: student.parent
         }
       });
-
       if (response.data.email != null) {
         return { ...student, parentemail: response.data.email };
       } else {
         return student;
       }
-    });
-
-    Promise.all(updatedStudents).then((updatedStudentArray) => {
-      setStudents(updatedStudentArray);
-    });
-    setLoading(false)
-  }, [students]);
+    }));
+    studentsPromise.then((students) => {
+      if (students.length <= 0) return;
+      setStudents(students)
+      setLoading(false)
+    })
+  }, [students, loading]);
 
   const viewAssignments = (course) => {
     setTimeout(() => {

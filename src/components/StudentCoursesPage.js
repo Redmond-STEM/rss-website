@@ -60,24 +60,23 @@ const StudentCoursesPage = () => {
 
   useEffect(() => {
     if (courses[0]?.teacheremail) return;
-    const updatedStudents = courses.map(async (course) => {
+    const coursesPromise = Promise.all(courses.map(async (course) => {
       const response = await axios.get(API_URL + "getaccount", {
         params: {
           id: course.teacher
         }
       });
-
       if (response.data.email != null) {
         return { ...course, teacheremail: response.data.email };
       } else {
         return course;
       }
-    });
-
-    Promise.all(updatedStudents).then((updatedStudentArray) => {
-      setCourses(updatedStudentArray);
-    });
-    setLoading(false);
+    }));
+    coursesPromise.then((courses) => {
+      if (courses.length <= 0) return;
+      setCourses(courses)
+      setLoading(false)
+    })
   }, [courses]);
 
   const navigateToGrades = (studentid, courseid) => {
