@@ -5,6 +5,7 @@ import axios from "axios"
 import { useNavigate } from 'react-router-dom';
 import { FormLabel, Button } from 'react-bootstrap';
 import API_URL from '../Api';
+import ReCAPTCHA from "react-google-recaptcha";
 
 const CreateStudentPage = () => {
 
@@ -12,9 +13,13 @@ const CreateStudentPage = () => {
 
   const { courseid } = useParams()
 
+  const [verified, setVerified] = useState(false);
+
   const [students, setStudents] = useState([]);
   const [studentFirstName, setStudentFirstName] = useState('');
   const [studentLastName, setStudentLastName] = useState('');
+
+  const clientkey = process.env.REACT_APP_RECAPTCHA;
 
   useEffect(() => {
     let authtoken = localStorage.getItem("authtoken")
@@ -65,6 +70,11 @@ const CreateStudentPage = () => {
     })
   };
 
+  const onVerified = () => {
+    console.log(verified)
+    setVerified(true)
+  };
+
   return (
     <div className="create-student">
       <FormLabel htmlFor="studentFirstName">First Name: </FormLabel>
@@ -74,7 +84,7 @@ const CreateStudentPage = () => {
         value={studentFirstName}
         onChange={handleFirstNameChange}
       />
-      <br/>
+      <br />
       <FormLabel htmlFor="studentLastName">Last Name: </FormLabel>
       <input
         type="text"
@@ -82,8 +92,13 @@ const CreateStudentPage = () => {
         value={studentLastName}
         onChange={handleLastNameChange}
       />
-      <br/>
-      <Button onClick={handleCreateStudent}>Create</Button>
+      <ReCAPTCHA sitekey={clientkey} onChange={onVerified} style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }} />
+      {verified && <Button onClick={handleCreateStudent}>Create</Button>}
+      <br />
     </div>
   )
 };

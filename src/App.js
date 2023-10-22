@@ -58,7 +58,6 @@ function App() {
           "auth_type": "google"
         })
       });
-    console.log(authtoken)
   }, [authtoken])
 
   return (
