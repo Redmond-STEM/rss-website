@@ -65,7 +65,8 @@ function App() {
     <div className="App">
       <GoogleOAuthProvider clientId={client_id}>
         <Helmet>
-          <meta charSet="utf-8" name='Redmond STEM Portal' content='This is the website application to manage your account with Redmond STEM.' title='Redmond STEM'/>
+          <meta charSet="utf-8" name='Redmond STEM Portal' content='This is the website application to manage your account with Redmond STEM.' title='Redmond STEM' />
+          <meta property='og:title' content="Redmond STEM Portal" />
           <title>Redmond STEM</title>
           <link rel="canonical" href="https://salmon-desert-06199921e.3.azurestaticapps.net/" />
         </Helmet>
