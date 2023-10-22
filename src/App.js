@@ -19,10 +19,11 @@ import logo from "./logo.png"
 import profile from "./profile.png"
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
-import "bootstrap/dist/css/bootstrap.min.css";import { useEffect, useState } from 'react';
+import "bootstrap/dist/css/bootstrap.min.css"; import { useEffect, useState } from 'react';
 import axios from "axios";
 import NotFoundPage from './components/NotFoundPage';
 import StudentCourseRegistrationPage from './components/StudentCourseRegistrationPage';
+import { Helmet } from "react-helmet";
 const client_id = process.env.REACT_APP_GOOGLE_OAUTH || process.env.APPSETTING_REACT_APP_GOOGLE_OAUTH;
 
 function App() {
@@ -63,6 +64,11 @@ function App() {
   return (
     <div className="App">
       <GoogleOAuthProvider clientId={client_id}>
+        <Helmet>
+          <meta charSet="utf-8" name='Redmond STEM Portal' content='This is the website application to manage your account with Redmond STEM.'/>
+          <title>Redmond STEM</title>
+          <link rel="canonical" href="https://salmon-desert-06199921e.3.azurestaticapps.net/" />
+        </Helmet>
         <Navbar bg="dark" data-bs-theme="dark">
           <Container>
             <Navbar.Brand href="/"><img alt="Redmond STEM" src={logo} width="40" height="40" /></Navbar.Brand>
