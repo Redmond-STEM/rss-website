@@ -1,12 +1,7 @@
-import Header from "./Header";
-import IntroParagraphs from "./IntroParagraphs";
-
 const HomePage = () => {
 
   return (
     <div>
-      <Header/>
-      <IntroParagraphs/>
       <div id="inspirational_quote" >
       <h3>
         "The roots of education are bitter, but the fruit is sweet." <h3 id="aristotle">-Aristotle</h3>
