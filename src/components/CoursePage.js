@@ -109,7 +109,7 @@ const CoursePage = () => {
                   <tr key={index}>
                     <td>{student.firstname}</td>
                     <td>{student.lastname}</td>
-                    <td>{student.parentemail}</td>
+                    <td><Button href={"mailto:" + student.parentemail}>Email Parent</Button></td>
                   </tr>
                 ))}
               </tbody>

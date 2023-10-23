@@ -111,7 +111,7 @@ const StudentCoursesPage = () => {
                     <td>{new Date(course.startdate).toDateString()}</td>
                     <td>{new Date(course.enddate).toDateString()}</td>
                     <td>{new Date(course.startdate).toLocaleTimeString() + " to " + new Date(course.enddate).toLocaleTimeString()}</td>
-                    <td>{course.teacheremail}</td>
+                    <td><Button href={"mailto:" + course.teacheremail}>Email Teacher</Button></td>
                     <td><Button onClick={() => navigateToGrades(studentid, course.id)}>View Grades</Button></td>
                   </tr>
                 ))}
