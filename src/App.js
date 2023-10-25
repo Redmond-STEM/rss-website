@@ -19,13 +19,14 @@ import logo from "./logo.png"
 import profile from "./profile.png"
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
-import "bootstrap/dist/css/bootstrap.min.css"; 
+import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from 'react';
 import axios from "axios";
 import NotFoundPage from './components/NotFoundPage';
 import StudentCourseRegistrationPage from './components/StudentCourseRegistrationPage';
 import { Helmet } from "react-helmet";
 import NoMobilePage from './components/NoMobilePage';
+import ContactPage from './components/ContactPage';
 const client_id = process.env.REACT_APP_GOOGLE_OAUTH || process.env.APPSETTING_REACT_APP_GOOGLE_OAUTH;
 
 function App() {
@@ -88,8 +89,7 @@ function App() {
                   <Nav.Link href="/#/teacherportal">Teacher Portal</Nav.Link>
                   <NavDropdown title="About Us">
                     <NavDropdown.Item href="/#/counselors">Conunselors</NavDropdown.Item>
-                    <NavDropdown.Item>Mission Statement</NavDropdown.Item>
-                    <NavDropdown.Item>Contact Us</NavDropdown.Item>
+                    <NavDropdown.Item href="/#/contact">Contact Us</NavDropdown.Item>
                   </NavDropdown>
                 </Nav>
                 <NavDropdown title={<img src={profile} alt="Profile" className="profile-picture" width="40" height="40" />} id="account-dropdown" color="white">
@@ -117,6 +117,7 @@ function App() {
                 <Route path="/parentportal" element={<ParentPortal />} />
                 <Route path="/parentportal/createstudent" element={<CreateStudentPage />} />
                 <Route path="/teacherportal" element={<TeacherPortalPage />} />
+                <Route path="/contact" element={<ContactPage />} />
                 <Route path="/notfound" element={<NotFoundPage />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>

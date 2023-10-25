@@ -45,13 +45,13 @@ const ParentPortalPage = () => {
   const navigateToCourses = (studentid) => {
     setTimeout(() => {
       navigate("/parentportal/" + studentid + "/courses")
-    }) 
+    })
   }
 
   const navigateToRegister = (studentid) => {
     setTimeout(() => {
       navigate("/parentportal/" + studentid + "/register")
-    }) 
+    })
   }
 
   return (
@@ -60,14 +60,13 @@ const ParentPortalPage = () => {
         <Loading />
       ) : (
         <div className="student-page">
-        <div className="student-page">
-          <Table bordered responsive="md" style={ {textAlign: "left"} }>
+          <Table bordered responsive="md" style={{ textAlign: "left" }}>
             <thead>
               <tr>
-                <th style={ {width: "10%"} }>First Name</th>
-                <th style={ {width: "10%"} }>Last Name</th>
-                <th style={ {width: "20%"} }>View Courses</th>
-                <th style={ {width: "20%"} }>Register for Courses</th>
+                <th style={{ width: "10%" }}>First Name</th>
+                <th style={{ width: "10%" }}>Last Name</th>
+                <th style={{ width: "20%" }}>View Courses</th>
+                <th style={{ width: "20%" }}>Register for Courses</th>
               </tr>
             </thead>
             <tbody>
@@ -90,7 +89,6 @@ const ParentPortalPage = () => {
             </tbody>
           </Table>
         </div>
-      </div>
       )}
     </div>
   );
